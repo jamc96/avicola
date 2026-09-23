@@ -15,6 +15,7 @@ import {
   semanaDeCosecha,
   semaforoDeDesviacion,
 } from "./calculos.js";
+import { consumoIdealSemanalQQ } from "./tabla-tecnica.js";
 import type { RegistroDiario } from "./types.js";
 
 test("aves vivas descuenta mortalidad y transferencias salientes", () => {
@@ -73,14 +74,21 @@ test("el semaforo marca desviaciones sobre la tolerancia", () => {
 test("el comparativo devuelve reales e ideales de la semana", () => {
   const comparativo = compararContraTabla({
     semana: 4,
-    consumoAcumuladoLbPorAve: 4.6,
-    pesoPromedioLb: 3.2,
+    consumoAcumuladoLbPorAve: 4.9,
+    pesoPromedioLb: 3.4,
     mortalidadAcumulada: 430,
     avesRecibidas: 24000,
   });
   assert.ok(comparativo);
-  assert.equal(comparativo.pesoIdealLb, 3.2);
+  assert.equal(comparativo.pesoIdealLb, 3.4);
+  assert.equal(comparativo.conversionIdeal, 1.44);
   assert.equal(comparativo.semaforo, "ok");
+});
+
+test("el consumo ideal de la semana escala con las aves vivas del galpon", () => {
+  // Semana 2: 1.3 - 0.38 = 0.92 Lb/ave sobre 10 000 aves = 92 QQ.
+  assert.equal(consumoIdealSemanalQQ(2, 10000), 92);
+  assert.equal(consumoIdealSemanalQQ(99, 10000), 0);
 });
 
 test("una semana fuera de la tabla no tiene comparativo", () => {

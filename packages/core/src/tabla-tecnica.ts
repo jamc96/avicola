@@ -7,12 +7,15 @@ export interface FilaTablaTecnica {
   semana: number;
   /** Dia de control de la semana. */
   dia: number;
-  /** Consumo ideal acumulado por ave, en libras. */
-  consumoIdealLbPorAve: number;
   /** Peso ideal por ave, en libras. */
   pesoIdealLbPorAve: number;
   /** Conversion alimenticia ideal (Lb consumidas / Lb de peso). */
   conversionIdeal: number;
+  /**
+   * Consumo ideal acumulado por ave, en libras. Se deriva de los otros dos valores,
+   * porque conversion = consumo acumulado (Lb/ave) / peso (Lb/ave).
+   */
+  consumoIdealLbPorAve: number;
   /** Mortalidad ideal acumulada, en porcentaje sobre aves recibidas. */
   mortalidadIdealPct: number;
 }
@@ -30,19 +33,26 @@ export const PORCENTAJE_MUESTREO = 0.1;
 export const BLOQUES_DE_MUESTREO = 3;
 
 /**
- * PENDIENTE: estos valores son marcadores de posicion con la forma correcta.
- * Hay que reemplazarlos por la tabla tecnica real que usa Inmeca
- * (docs/03-datos-de-ejemplo.xlsx) antes de mostrar el POC al dueno.
+ * Peso y conversion ideales por semana, tomados de los datos del prototipo
+ * (designs/Inmeca.dc.html).
+ *
+ * PENDIENTE: la mortalidad ideal acumulada todavia es un marcador de posicion —
+ * la tabla tecnica de Inmeca no la documenta en los datos que tenemos.
  */
-export const TABLA_TECNICA: readonly FilaTablaTecnica[] = [
-  { semana: 1, dia: 7, consumoIdealLbPorAve: 0.36, pesoIdealLbPorAve: 0.42, conversionIdeal: 0.86, mortalidadIdealPct: 0.5 },
-  { semana: 2, dia: 14, consumoIdealLbPorAve: 1.2, pesoIdealLbPorAve: 1.05, conversionIdeal: 1.14, mortalidadIdealPct: 0.9 },
-  { semana: 3, dia: 21, consumoIdealLbPorAve: 2.6, pesoIdealLbPorAve: 2.0, conversionIdeal: 1.3, mortalidadIdealPct: 1.3 },
-  { semana: 4, dia: 28, consumoIdealLbPorAve: 4.6, pesoIdealLbPorAve: 3.2, conversionIdeal: 1.44, mortalidadIdealPct: 1.8 },
-  { semana: 5, dia: 35, consumoIdealLbPorAve: 7.1, pesoIdealLbPorAve: 4.5, conversionIdeal: 1.58, mortalidadIdealPct: 2.3 },
-  { semana: 6, dia: 42, consumoIdealLbPorAve: 9.9, pesoIdealLbPorAve: 5.8, conversionIdeal: 1.71, mortalidadIdealPct: 2.8 },
-  { semana: 7, dia: 49, consumoIdealLbPorAve: 13.0, pesoIdealLbPorAve: 7.1, conversionIdeal: 1.83, mortalidadIdealPct: 3.2 },
-];
+const IDEALES_POR_SEMANA = [
+  { semana: 1, dia: 7, pesoIdealLbPorAve: 0.4, conversionIdeal: 0.95, mortalidadIdealPct: 0.5 },
+  { semana: 2, dia: 14, pesoIdealLbPorAve: 1.0, conversionIdeal: 1.3, mortalidadIdealPct: 0.9 },
+  { semana: 3, dia: 21, pesoIdealLbPorAve: 2.1, conversionIdeal: 1.33, mortalidadIdealPct: 1.3 },
+  { semana: 4, dia: 28, pesoIdealLbPorAve: 3.4, conversionIdeal: 1.44, mortalidadIdealPct: 1.8 },
+  { semana: 5, dia: 35, pesoIdealLbPorAve: 4.8, conversionIdeal: 1.6, mortalidadIdealPct: 2.3 },
+  { semana: 6, dia: 42, pesoIdealLbPorAve: 6.3, conversionIdeal: 1.79, mortalidadIdealPct: 2.8 },
+  { semana: 7, dia: 49, pesoIdealLbPorAve: 7.8, conversionIdeal: 1.88, mortalidadIdealPct: 3.2 },
+] as const;
+
+export const TABLA_TECNICA: readonly FilaTablaTecnica[] = IDEALES_POR_SEMANA.map((fila) => ({
+  ...fila,
+  consumoIdealLbPorAve: Number((fila.pesoIdealLbPorAve * fila.conversionIdeal).toFixed(3)),
+}));
 
 export function filaTablaTecnica(semana: number): FilaTablaTecnica | undefined {
   return TABLA_TECNICA.find((fila) => fila.semana === semana);
@@ -50,4 +60,16 @@ export function filaTablaTecnica(semana: number): FilaTablaTecnica | undefined {
 
 export function esSemanaDeMuestreo(semana: number): boolean {
   return (SEMANAS_DE_MUESTREO as readonly number[]).includes(semana);
+}
+
+/**
+ * Consumo ideal de la semana en quintales: % ideal de consumo x aves vivas / 100
+ * (plan seccion 12.2). Se expresa con el consumo ideal por ave de la tabla.
+ */
+export function consumoIdealSemanalQQ(semana: number, avesVivasGalpon: number): number {
+  const anterior = filaTablaTecnica(semana - 1);
+  const actual = filaTablaTecnica(semana);
+  if (!actual) return 0;
+  const consumoDeLaSemana = actual.consumoIdealLbPorAve - (anterior?.consumoIdealLbPorAve ?? 0);
+  return (consumoDeLaSemana * avesVivasGalpon) / 100;
 }
