@@ -1,0 +1,137 @@
+<svg viewBox="0 0 1000 1980" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4a5568"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="1980" fill="#ffffff"/>
+  <text x="500" y="40" text-anchor="middle" font-size="24" font-weight="bold" fill="#1a202c">Flujo de registros — Inmeca (por cosecha)</text>
+
+  <!-- 1 -->
+  <rect x="300" y="70" width="400" height="70" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="500" y="98" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e3a8a">1. Recepción de aves (galpón inicial)</text>
+  <text x="500" y="120" text-anchor="middle" font-size="13" fill="#1e3a8a">Dueño: cantidad total y fecha de ingreso (una vez por cosecha)</text>
+
+  <line x1="500" y1="140" x2="500" y2="170" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 2 -->
+  <rect x="300" y="170" width="400" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="500" y="196" text-anchor="middle" font-size="16" font-weight="bold" fill="#14532d">2. Cuidado intensivo — semana 1</text>
+  <text x="500" y="218" text-anchor="middle" font-size="13" fill="#14532d">Trabajador captura mortalidad y consumo</text>
+  <text x="500" y="236" text-anchor="middle" font-size="13" fill="#14532d">en el galpón inicial</text>
+
+  <line x1="500" y1="250" x2="500" y2="280" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 3 transferencia (opcional) -->
+  <rect x="270" y="280" width="460" height="80" rx="10" fill="#ffe4e6" stroke="#e11d48" stroke-width="2" stroke-dasharray="7,5"/>
+  <text x="500" y="303" text-anchor="middle" font-size="16" font-weight="bold" fill="#881337">3. Transferencia entre galpones</text>
+  <text x="500" y="322" text-anchor="middle" font-size="12" font-style="italic" fill="#881337">(opcional — solo si se decide mover el lote)</text>
+  <text x="500" y="341" text-anchor="middle" font-size="12" fill="#881337">Supervisor/Dueño: destino y cantidad de aves — no cuenta como mortalidad</text>
+
+  <line x1="500" y1="360" x2="500" y2="390" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- bypass: si no hay transferencia -->
+  <path d="M 700,205 C 870,205 870,405 705,405" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <text x="885" y="305" font-size="11" fill="#64748b" text-anchor="middle" transform="rotate(90 885 305)">si no hay traslado</text>
+
+  <!-- Galpon lane label -->
+  <rect x="120" y="390" width="760" height="640" rx="14" fill="none" stroke="#a0aec0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="150" y="415" font-size="14" font-weight="bold" fill="#4a5568">En cada galpón de engorde, cada semana ↓</text>
+
+  <!-- 4 -->
+  <rect x="300" y="430" width="400" height="80" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="500" y="458" text-anchor="middle" font-size="16" font-weight="bold" fill="#14532d">4. Captura diaria — Trabajador</text>
+  <text x="500" y="480" text-anchor="middle" font-size="13" fill="#14532d">Mortalidad del día + consumo de alimento</text>
+  <text x="500" y="498" text-anchor="middle" font-size="13" fill="#14532d">(lunes a domingo)</text>
+
+  <line x1="500" y1="510" x2="500" y2="540" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 5 -->
+  <rect x="300" y="540" width="400" height="90" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="500" y="566" text-anchor="middle" font-size="16" font-weight="bold" fill="#78350f">5. Captura semanal — Supervisor</text>
+  <text x="500" y="588" text-anchor="middle" font-size="13" fill="#78350f">Muestreo de peso (10% del galpón), transferencias</text>
+  <text x="500" y="606" text-anchor="middle" font-size="13" fill="#78350f">de sacos bodega → galpón, chequeo de inventario</text>
+
+  <line x1="500" y1="630" x2="500" y2="660" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 6 -->
+  <rect x="270" y="660" width="460" height="100" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="500" y="686" text-anchor="middle" font-size="16" font-weight="bold" fill="#4c1d95">6. Cálculos automáticos del sistema</text>
+  <text x="500" y="708" text-anchor="middle" font-size="13" fill="#4c1d95">% mortalidad, consumo por ave, conversión alimenticia,</text>
+  <text x="500" y="726" text-anchor="middle" font-size="13" fill="#4c1d95">peso promedio real, saldos de inventario (galpón y bodega)</text>
+  <text x="500" y="744" text-anchor="middle" font-size="13" fill="#4c1d95">— replica las fórmulas del Excel actual</text>
+
+  <line x1="500" y1="760" x2="500" y2="790" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 7 decision -->
+  <polygon points="500,790 640,850 500,910 360,850" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="500" y="842" text-anchor="middle" font-size="14" font-weight="bold" fill="#7f1d1d">7. ¿Real está dentro</text>
+  <text x="500" y="860" text-anchor="middle" font-size="14" font-weight="bold" fill="#7f1d1d">del rango ideal (tabla)?</text>
+
+  <line x1="640" y1="850" x2="800" y2="850" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="720" y="838" text-anchor="middle" font-size="12" fill="#4a5568">No</text>
+  <rect x="800" y="815" width="180" height="70" rx="10" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+  <text x="890" y="842" text-anchor="middle" font-size="13" font-weight="bold" fill="#7f1d1d">Alerta de</text>
+  <text x="890" y="860" text-anchor="middle" font-size="13" font-weight="bold" fill="#7f1d1d">desviación</text>
+  <text x="890" y="876" text-anchor="middle" font-size="11" fill="#7f1d1d">al Dueño</text>
+
+  <line x1="500" y1="910" x2="500" y2="940" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="514" y="928" font-size="12" fill="#4a5568">Sí</text>
+
+  <line x1="890" y1="885" x2="890" y2="970" stroke="#4a5568" stroke-width="2"/>
+  <line x1="890" y1="970" x2="700" y2="970" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 8 -->
+  <rect x="300" y="940" width="400" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="500" y="968" text-anchor="middle" font-size="16" font-weight="bold" fill="#0c4a6e">8. Dashboard / Reportes — Dueño</text>
+  <text x="500" y="990" text-anchor="middle" font-size="13" fill="#0c4a6e">Semáforo por galpón, comparativo real vs. ideal,</text>
+  <text x="500" y="1008" text-anchor="middle" font-size="13" fill="#0c4a6e">inventario y costos</text>
+
+  <text x="150" y="1050" font-size="13" fill="#4a5568">↻ Este ciclo (pasos 4–8) se repite cada semana hasta que la cosecha llega a peso de venta.</text>
+
+  <line x1="500" y1="1020" x2="500" y2="1050" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 9 -->
+  <rect x="300" y="1050" width="400" height="70" rx="10" fill="#fae8ff" stroke="#a21caf" stroke-width="2"/>
+  <text x="500" y="1078" text-anchor="middle" font-size="16" font-weight="bold" fill="#701a75">9. Entrega(s) a planta</text>
+  <text x="500" y="1100" text-anchor="middle" font-size="13" fill="#701a75">Aves entregadas y peso total (puede haber varias)</text>
+
+  <line x1="500" y1="1120" x2="500" y2="1150" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 10 -->
+  <rect x="270" y="1150" width="460" height="90" rx="10" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+  <text x="500" y="1178" text-anchor="middle" font-size="16" font-weight="bold" fill="#0f172a">10. Cierre de la cosecha</text>
+  <text x="500" y="1200" text-anchor="middle" font-size="13" fill="#0f172a">Conversión final y GDP calculados, la cosecha pasa al</text>
+  <text x="500" y="1218" text-anchor="middle" font-size="13" fill="#0f172a">historial, los galpones quedan libres para una cosecha nueva</text>
+
+  <line x1="270" y1="1195" x2="150" y2="1195" stroke="#4a5568" stroke-width="2"/>
+  <line x1="150" y1="1195" x2="150" y2="105" stroke="#4a5568" stroke-width="2"/>
+  <line x1="150" y1="105" x2="300" y2="105" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="120" y="700" font-size="12" fill="#4a5568" transform="rotate(-90 120 700)">vuelve al paso 1 (cosecha nueva)</text>
+
+  <!-- Legend -->
+  <rect x="120" y="1270" width="760" height="270" rx="10" fill="#fafafa" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="150" y="1300" font-size="15" font-weight="bold" fill="#1a202c">Leyenda de roles</text>
+
+  <rect x="150" y="1320" width="20" height="20" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="180" y="1335" font-size="13" fill="#1a202c">Trabajador — captura básica diaria (mortalidad, consumo)</text>
+
+  <rect x="150" y="1350" width="20" height="20" fill="#fef3c7" stroke="#d97706"/>
+  <text x="180" y="1365" font-size="13" fill="#1a202c">Supervisor — captura ampliada (pesajes, inventario, transferencias)</text>
+
+  <rect x="150" y="1380" width="20" height="20" fill="#dbeafe" stroke="#2563eb"/>
+  <text x="180" y="1395" font-size="13" fill="#1a202c">Dueño — configuración operativa, apertura de cosecha, entregas</text>
+
+  <rect x="150" y="1410" width="20" height="20" fill="#ffe4e6" stroke="#e11d48" stroke-dasharray="3,2"/>
+  <text x="180" y="1425" font-size="13" fill="#1a202c">Transferencia de aves entre galpones (opcional)</text>
+
+  <rect x="150" y="1440" width="20" height="20" fill="#e0f2fe" stroke="#0284c7"/>
+  <text x="180" y="1455" font-size="13" fill="#1a202c">Dashboard / reportes — visible para el Dueño</text>
+
+  <rect x="150" y="1470" width="20" height="20" fill="#ede9fe" stroke="#7c3aed"/>
+  <text x="180" y="1485" font-size="13" fill="#1a202c">Cálculos automáticos del sistema (sin intervención manual)</text>
+
+  <text x="150" y="1515" font-size="12" fill="#64748b">Nota: fecha y hora de cada registro se guardan automáticamente en todos los pasos — nunca las escribe el usuario.</text>
+
+</svg>

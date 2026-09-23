@@ -1,0 +1,219 @@
+<svg viewBox="0 0 1200 1720" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Inmeca — El potencial de la app de producción avícola</title>
+<desc>Infografía de una página que resume el valor de negocio, las funcionalidades diferenciadoras y el potencial de expansión de la app de gestión de producción avícola Inmeca, pensada para uso de marketing.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L7,3 L0,6 Z" fill="#0F766E"/>
+  </marker>
+</defs>
+
+<rect width="1200" height="1720" fill="#FAFAF9"/>
+
+<!-- ===== HEADER ===== -->
+<rect x="0" y="0" width="1200" height="150" fill="#134E4A"/>
+<text x="60" y="65" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#FFFFFF">Inmeca — el potencial completo de la app</text>
+<text x="60" y="98" font-family="Arial, sans-serif" font-size="16" fill="#CCFBF1">De un Excel de 100+ hojas a un sistema de producción avícola en tiempo real, en el bolsillo de cada persona en la granja.</text>
+<text x="60" y="128" font-family="Arial, sans-serif" font-size="13" fill="#99F6E4">Gestiona cosechas que representan millones de lempiras de inversión por ciclo.</text>
+
+<!-- ===== SECTION: ANTES / AHORA ===== -->
+<text x="60" y="195" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#18181B">De hoy a mañana</text>
+
+<!-- ANTES column -->
+<rect x="60" y="215" width="520" height="230" rx="12" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="1.5"/>
+<rect x="60" y="215" width="520" height="42" rx="12" fill="#FEE2E2"/>
+<rect x="60" y="245" width="520" height="12" fill="#FEE2E2"/>
+<text x="84" y="242" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#991B1B">Hoy — Excel manual</text>
+<g font-family="Arial, sans-serif" font-size="13.5" fill="#3F3F46">
+  <text x="84" y="285">✕ 100+ hojas, una por cada cosecha — imposible de comparar rápido</text>
+  <text x="84" y="313">✕ Datos escritos a mano, con horas de retraso hasta que alguien los ve</text>
+  <text x="84" y="341">✕ El dueño se entera de un problema días después, no el mismo día</text>
+  <text x="84" y="369">✕ Ningún trabajador ni supervisor tiene acceso — solo quien lleva el Excel</text>
+  <text x="84" y="397">✕ Cero trazabilidad de quién registró qué y cuándo</text>
+  <text x="84" y="425">✕ Comparar cosechas o galpones requiere abrir varios archivos</text>
+</g>
+
+<!-- AHORA column -->
+<rect x="620" y="215" width="520" height="230" rx="12" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+<rect x="620" y="215" width="520" height="42" rx="12" fill="#CCFBF1"/>
+<rect x="620" y="245" width="520" height="12" fill="#CCFBF1"/>
+<text x="644" y="242" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#134E4A">Con la app — sistema en vivo</text>
+<g font-family="Arial, sans-serif" font-size="13.5" fill="#3F3F46">
+  <text x="644" y="285">✓ Una app móvil, un vistazo, todos los galpones y cosechas activas</text>
+  <text x="644" y="313">✓ Registro en segundos desde el celular, disponible al instante</text>
+  <text x="644" y="341">✓ Alertas automáticas el mismo día que algo se desvía de lo ideal</text>
+  <text x="644" y="369">✓ Cada rol — trabajador, supervisor, dueño — tiene su propia vista</text>
+  <text x="644" y="397">✓ Cada registro queda con fecha, hora y responsable, automáticamente</text>
+  <text x="644" y="425">✓ Historial y comparativos de un toque, sin abrir un solo archivo</text>
+</g>
+
+<!-- ===== SECTION: VALOR DE NEGOCIO ===== -->
+<text x="60" y="500" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#18181B">Valor de negocio</text>
+<text x="60" y="522" font-family="Arial, sans-serif" font-size="13" fill="#52525B">Lo que la app representa en tiempo, pérdidas evitadas y control financiero.</text>
+
+<!-- 4 value cards -->
+<g font-family="Arial, sans-serif">
+  <!-- card 1 -->
+  <rect x="60" y="545" width="252" height="175" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="96" cy="585" r="20" fill="#CCFBF1"/>
+  <text x="96" y="591" font-size="16" text-anchor="middle" fill="#134E4A">⏱</text>
+  <text x="84" y="628" font-size="14" font-weight="700" fill="#18181B">Menos tiempo</text>
+  <text x="84" y="646" font-size="14" font-weight="700" fill="#18181B">administrativo</text>
+  <text x="84" y="672" font-size="12" fill="#52525B">Registrar mortalidad y</text>
+  <text x="84" y="688" font-size="12" fill="#52525B">consumo toma segundos,</text>
+  <text x="84" y="704" font-size="12" fill="#52525B">no minutos con papel/Excel.</text>
+
+  <!-- card 2 -->
+  <rect x="336" y="545" width="252" height="175" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="372" cy="585" r="20" fill="#FEE2E2"/>
+  <text x="372" y="591" font-size="16" text-anchor="middle" fill="#DC2626">⚠</text>
+  <text x="360" y="628" font-size="14" font-weight="700" fill="#18181B">Menos pérdidas</text>
+  <text x="360" y="646" font-size="14" font-weight="700" fill="#18181B">por reacción tardía</text>
+  <text x="360" y="672" font-size="12" fill="#52525B">El semáforo de alerta avisa</text>
+  <text x="360" y="688" font-size="12" fill="#52525B">el mismo día que el consumo</text>
+  <text x="360" y="704" font-size="12" fill="#52525B">o el peso se desvían del ideal.</text>
+
+  <!-- card 3 -->
+  <rect x="612" y="545" width="252" height="175" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="648" cy="585" r="20" fill="#E7F7ED"/>
+  <text x="648" y="591" font-size="16" text-anchor="middle" fill="#16A34A">Q</text>
+  <text x="636" y="628" font-size="14" font-weight="700" fill="#18181B">Control financiero</text>
+  <text x="636" y="646" font-size="14" font-weight="700" fill="#18181B">en tiempo real</text>
+  <text x="636" y="672" font-size="12" fill="#52525B">El dueño ve costos de</text>
+  <text x="636" y="688" font-size="12" fill="#52525B">alimento y valor entregado</text>
+  <text x="636" y="704" font-size="12" fill="#52525B">de cada cosecha, al día.</text>
+
+  <!-- card 4 -->
+  <rect x="888" y="545" width="252" height="175" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="924" cy="585" r="20" fill="#EDE9FE"/>
+  <text x="924" y="591" font-size="16" text-anchor="middle" fill="#7C3AED">↗</text>
+  <text x="912" y="628" font-size="14" font-weight="700" fill="#18181B">Decisiones con</text>
+  <text x="912" y="646" font-size="14" font-weight="700" fill="#18181B">datos, no con memoria</text>
+  <text x="912" y="672" font-size="12" fill="#52525B">Comparar cosechas, galpones</text>
+  <text x="912" y="688" font-size="12" fill="#52525B">y trabajadores toma un</text>
+  <text x="912" y="704" font-size="12" fill="#52525B">toque, no una tarde entera.</text>
+</g>
+
+<!-- ===== SECTION: DIFERENCIADORES ===== -->
+<text x="60" y="775" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#18181B">Qué hace diferente a la app</text>
+<text x="60" y="797" font-family="Arial, sans-serif" font-size="13" fill="#52525B">No es una app genérica de formularios — está diseñada específicamente para el negocio avícola.</text>
+
+<g font-family="Arial, sans-serif">
+  <!-- row1 card1 -->
+  <rect x="60" y="820" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="92" cy="852" r="14" fill="#0F766E"/>
+  <text x="92" y="857" font-size="13" text-anchor="middle" fill="#FFFFFF">✓</text>
+  <text x="116" y="857" font-size="14" font-weight="700" fill="#18181B">Captura automática</text>
+  <text x="84" y="882" font-size="12" fill="#52525B">Fecha, hora y usuario se registran</text>
+  <text x="84" y="898" font-size="12" fill="#52525B">solos. Nunca se le pide al trabajador</text>
+  <text x="84" y="914" font-size="12" fill="#52525B">un dato que la app ya sabe.</text>
+
+  <!-- row1 card2 -->
+  <rect x="428" y="820" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="460" cy="852" r="14" fill="#D97706"/>
+  <text x="460" y="857" font-size="13" text-anchor="middle" fill="#FFFFFF">●</text>
+  <text x="484" y="857" font-size="14" font-weight="700" fill="#18181B">Alertas tipo semáforo</text>
+  <text x="452" y="882" font-size="12" fill="#52525B">Verde, ámbar o rojo en cada galpón,</text>
+  <text x="452" y="898" font-size="12" fill="#52525B">comparando siempre lo real contra</text>
+  <text x="452" y="914" font-size="12" fill="#52525B">la tabla técnica ideal de Inmeca.</text>
+
+  <!-- row1 card3 -->
+  <rect x="796" y="820" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="828" cy="852" r="14" fill="#134E4A"/>
+  <text x="828" y="857" font-size="13" text-anchor="middle" fill="#FFFFFF">⚇</text>
+  <text x="852" y="857" font-size="14" font-weight="700" fill="#18181B">Roles a la medida</text>
+  <text x="820" y="882" font-size="12" fill="#52525B">Trabajador, Supervisor y Dueño ven</text>
+  <text x="820" y="898" font-size="12" fill="#52525B">exactamente lo que su función</text>
+  <text x="820" y="914" font-size="12" fill="#52525B">necesita — sin ruido, sin exceso.</text>
+
+  <!-- row2 card1 -->
+  <rect x="60" y="966" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="92" cy="998" r="14" fill="#16A34A"/>
+  <text x="92" y="1003" font-size="13" text-anchor="middle" fill="#FFFFFF">✓</text>
+  <text x="116" y="1003" font-size="14" font-weight="700" fill="#18181B">Trazabilidad completa</text>
+  <text x="84" y="1028" font-size="12" fill="#52525B">Cada registro, entrega o traslado</text>
+  <text x="84" y="1044" font-size="12" fill="#52525B">queda con nombre y hora — se sabe</text>
+  <text x="84" y="1060" font-size="12" fill="#52525B">quién hizo qué, siempre.</text>
+
+  <!-- row2 card2 -->
+  <rect x="428" y="966" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="460" cy="998" r="14" fill="#0F766E"/>
+  <text x="460" y="1003" font-size="13" text-anchor="middle" fill="#FFFFFF">▤</text>
+  <text x="484" y="1003" font-size="14" font-weight="700" fill="#18181B">Mobile-first de verdad</text>
+  <text x="452" y="1028" font-size="12" fill="#52525B">Pensada para usarse con una mano,</text>
+  <text x="452" y="1044" font-size="12" fill="#52525B">con guantes, bajo sol directo —</text>
+  <text x="452" y="1060" font-size="12" fill="#52525B">no una web adaptada al celular.</text>
+
+  <!-- row2 card3 -->
+  <rect x="796" y="966" width="344" height="130" rx="10" fill="#FFFFFF" stroke="#E4E4E7"/>
+  <circle cx="828" cy="998" r="14" fill="#7C3AED"/>
+  <text x="828" y="1003" font-size="13" text-anchor="middle" fill="#FFFFFF">↗</text>
+  <text x="852" y="1003" font-size="14" font-weight="700" fill="#18181B">Historial y comparativos</text>
+  <text x="820" y="1028" font-size="12" fill="#52525B">Cada cosecha cerrada queda</text>
+  <text x="820" y="1044" font-size="12" fill="#52525B">disponible para comparar peso,</text>
+  <text x="820" y="1060" font-size="12" fill="#52525B">conversión y mortalidad entre ciclos.</text>
+</g>
+
+<!-- ===== SECTION: POTENCIAL DE EXPANSIÓN ===== -->
+<text x="60" y="1150" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#18181B">Hacia dónde puede crecer</text>
+<text x="60" y="1172" font-family="Arial, sans-serif" font-size="13" fill="#52525B">Lo que se construye hoy para Inmeca es la base de un producto más grande.</text>
+
+<!-- roadmap -->
+<g font-family="Arial, sans-serif">
+  <!-- connectors -->
+  <line x1="290" y1="1270" x2="340" y2="1270" stroke="#0F766E" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="570" y1="1270" x2="620" y2="1270" stroke="#0F766E" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="850" y1="1270" x2="900" y2="1270" stroke="#0F766E" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- stage 1 -->
+  <rect x="60" y="1200" width="230" height="140" rx="10" fill="#134E4A"/>
+  <text x="175" y="1234" text-anchor="middle" font-size="12" fill="#99F6E4" font-weight="700">HOY</text>
+  <text x="175" y="1262" text-anchor="middle" font-size="14.5" font-weight="700" fill="#FFFFFF">Granja Inmeca</text>
+  <text x="175" y="1284" text-anchor="middle" font-size="11.5" fill="#CCFBF1">3 galpones, control</text>
+  <text x="175" y="1300" text-anchor="middle" font-size="11.5" fill="#CCFBF1">total de cada cosecha</text>
+
+  <!-- stage 2 -->
+  <rect x="340" y="1200" width="230" height="140" rx="10" fill="#0F766E"/>
+  <text x="455" y="1234" text-anchor="middle" font-size="12" fill="#CCFBF1" font-weight="700">SIGUIENTE</text>
+  <text x="455" y="1262" text-anchor="middle" font-size="14.5" font-weight="700" fill="#FFFFFF">Múltiples granjas</text>
+  <text x="455" y="1284" text-anchor="middle" font-size="11.5" fill="#CCFBF1">Un dueño, varias fincas,</text>
+  <text x="455" y="1300" text-anchor="middle" font-size="11.5" fill="#CCFBF1">un solo panel de control</text>
+
+  <!-- stage 3 -->
+  <rect x="620" y="1200" width="230" height="140" rx="10" fill="#0D9488"/>
+  <text x="735" y="1234" text-anchor="middle" font-size="12" fill="#CCFBF1" font-weight="700">DESPUÉS</text>
+  <text x="735" y="1262" text-anchor="middle" font-size="14.5" font-weight="700" fill="#FFFFFF">Otros rubros pecuarios</text>
+  <text x="735" y="1284" text-anchor="middle" font-size="11.5" fill="#CCFBF1">El mismo modelo aplica a</text>
+  <text x="735" y="1300" text-anchor="middle" font-size="11.5" fill="#CCFBF1">cerdos, ganado, acuicultura</text>
+
+  <!-- stage 4 -->
+  <rect x="900" y="1200" width="240" height="140" rx="10" fill="#134E4A" stroke="#7C3AED" stroke-width="2" stroke-dasharray="5,4"/>
+  <text x="1020" y="1234" text-anchor="middle" font-size="12" fill="#DDD6FE" font-weight="700">VISIÓN</text>
+  <text x="1020" y="1262" text-anchor="middle" font-size="14.5" font-weight="700" fill="#FFFFFF">Producto SaaS</text>
+  <text x="1020" y="1284" text-anchor="middle" font-size="11.5" fill="#DDD6FE">Licencia mensual para</text>
+  <text x="1020" y="1300" text-anchor="middle" font-size="11.5" fill="#DDD6FE">otras granjas del sector</text>
+</g>
+
+<!-- ===== FOOTER ===== -->
+<rect x="0" y="1400" width="1200" height="320" fill="#F4F6F5"/>
+<line x1="0" y1="1400" x2="1200" y2="1400" stroke="#E4E4E7"/>
+<text x="60" y="1450" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#134E4A">En una frase</text>
+<text x="60" y="1482" font-family="Arial, sans-serif" font-size="15" fill="#3F3F46">Inmeca pasa de administrar cosechas con un Excel de 100+ hojas a un sistema de producción</text>
+<text x="60" y="1505" font-family="Arial, sans-serif" font-size="15" fill="#3F3F46">en tiempo real — cada trabajador, supervisor y dueño con la información que necesita,</text>
+<text x="60" y="1528" font-family="Arial, sans-serif" font-size="15" fill="#3F3F46">en el momento que la necesita, sin depender de una sola persona ni de un solo archivo.</text>
+
+<g font-family="Arial, sans-serif">
+  <rect x="60" y="1565" width="1080" height="1" fill="#E4E4E7"/>
+  <text x="60" y="1600" font-size="12" font-weight="700" fill="#18181B">Etapa actual</text>
+  <text x="60" y="1620" font-size="12" fill="#52525B">Prototipo navegable de alta fidelidad, con datos reales</text>
+  <text x="60" y="1636" font-size="12" fill="#52525B">de las cosechas de 2026, listo para revisión del dueño.</text>
+
+  <text x="440" y="1600" font-size="12" font-weight="700" fill="#18181B">Próximo paso</text>
+  <text x="440" y="1620" font-size="12" fill="#52525B">Validar el prototipo con el dueño y el equipo,</text>
+  <text x="440" y="1636" font-size="12" fill="#52525B">luego conectarlo a los datos de producción reales.</text>
+
+  <text x="820" y="1600" font-size="12" font-weight="700" fill="#18181B">Por qué importa</text>
+  <text x="820" y="1620" font-size="12" fill="#52525B">Cada cosecha mueve millones de lempiras —</text>
+  <text x="820" y="1636" font-size="12" fill="#52525B">mejor información significa mejores decisiones.</text>
+</g>
+
+</svg>

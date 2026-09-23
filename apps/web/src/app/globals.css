@@ -1,0 +1,30 @@
+@import "@avicola/ui/styles.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* Mobile-first: la pantalla se disena para el celular y se centra en pantallas grandes. */
+.contenedor {
+  margin: 0 auto;
+  max-width: 480px;
+  padding: var(--espacio);
+}

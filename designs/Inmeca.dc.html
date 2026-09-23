@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; font-family: 'Manrope', system-ui, sans-serif; background: #E7E5E4; }
+  a { color: #0F766E; }
+  a:hover { color: #134E4A; }
+  .scroll::-webkit-scrollbar { width: 0; height: 0; }
+  .scroll { scrollbar-width: none; }
+  input, select, textarea { font-family: inherit; }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes sheetIn { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 0%, #F5F5F4 0%, #E7E5E4 70%)">
+  <div style="width:402px;height:864px;background:#0B0B0C;border-radius:48px;padding:11px;box-shadow:0 40px 90px -20px rgba(19,78,74,.45),0 0 0 1px rgba(0,0,0,.06);position:relative">
+    <div style="position:absolute;top:22px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#0B0B0C;border-radius:0 0 18px 18px;z-index:60"></div>
+    <div style="width:100%;height:100%;background:#FAFAF9;border-radius:38px;overflow:hidden;position:relative;display:flex;flex-direction:column">
+
+      <!-- STATUS BAR -->
+      <div style="flex:none;height:46px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 6px;font-size:13px;font-weight:700;color:#18181B;z-index:20">
+        <span>9:41</span>
+        <span style="display:flex;gap:5px;align-items:center">
+          <span style="letter-spacing:1px">●●●</span>
+          <span style="width:22px;height:11px;border:1.5px solid #18181B;border-radius:3px;display:inline-block;position:relative"><span style="position:absolute;inset:1.5px;right:5px;background:#18181B;border-radius:1px"></span></span>
+        </span>
+      </div>
+
+      <!-- HEADER -->
+      <sc-if value="{{ showHeader }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;padding:6px 18px 14px;background:#FAFAF9;border-bottom:1px solid #E4E4E7;display:flex;align-items:center;gap:12px;z-index:15">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:19px;font-weight:800;color:#134E4A;line-height:1.15;letter-spacing:-.01em">{{ title }}</div>
+            <div style="font-size:12px;font-weight:500;color:#52525B;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ subtitle }}</div>
+          </div>
+          <span style="flex:none;font-size:11px;font-weight:700;color:#0F766E;background:#CCFBF1;padding:5px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em">{{ roleLabel }}</span>
+          <button onClick="{{ logout }}" title="Salir" style="flex:none;width:38px;height:38px;border:1px solid #E4E4E7;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#52525B">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5v-2H5V5h5zM17 8l-1.4 1.4L17.2 11H9v2h8.2l-1.6 1.6L17 16l4-4z"/></svg>
+          </button>
+        </div>
+      </sc-if>
+
+      <!-- SCREEN AREA -->
+      <div class="scroll" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative">
+
+        <!-- ============ LOGIN ============ -->
+        <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+          <div style="min-height:100%;padding:44px 26px 30px;display:flex;flex-direction:column">
+            <div style="flex:none">
+              <div style="width:56px;height:56px;border-radius:16px;background:#0F766E;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px -6px rgba(15,118,110,.5)">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M3 7 12 3l9 4v10l-9 4-9-4zM12 3v18M3 7l9 4 9-4"/><path fill="none" stroke="#fff" stroke-width="1.6" d="M3 7l9 4 9-4M12 11v10"/></svg>
+              </div>
+              <h1 style="font-size:30px;font-weight:800;color:#134E4A;margin:22px 0 4px;letter-spacing:-.02em">Inmeca</h1>
+              <p style="font-size:14px;color:#52525B;margin:0;font-weight:500">Registro de producción avícola</p>
+            </div>
+
+            <div style="margin-top:30px;flex:none">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em">Usuario o teléfono</label>
+              <input value="dueno@inmeca" readonly style="width:100%;height:50px;margin-top:7px;padding:0 15px;border:1px solid #E4E4E7;border-radius:13px;background:#fff;font-size:15px;font-weight:600;color:#18181B">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:15px">Contraseña</label>
+              <div style="position:relative;margin-top:7px">
+                <input value="••••••••" readonly type="password" style="width:100%;height:50px;padding:0 46px 0 15px;border:1px solid #E4E4E7;border-radius:13px;background:#fff;font-size:15px;color:#18181B">
+                <span style="position:absolute;right:15px;top:50%;transform:translateY(-50%);color:#A1A1AA"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></span>
+              </div>
+              <div style="text-align:right;margin-top:9px"><span style="font-size:13px;font-weight:600;color:#0F766E">Olvidé mi contraseña</span></div>
+            </div>
+
+            <div style="margin-top:26px;flex:1;display:flex;flex-direction:column;justify-content:flex-end">
+              <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px">Cuentas de demostración · toca una para entrar</div>
+              <div style="display:flex;flex-direction:column;gap:9px">
+                <sc-for list="{{ loginCards }}" as="u" hint-placeholder-count="4">
+                  <button onClick="{{ u.enter }}" style="display:flex;align-items:center;gap:13px;width:100%;padding:13px 14px;border:1px solid #E4E4E7;background:#fff;border-radius:15px;cursor:pointer;text-align:left">
+                    <span style="flex:none;width:42px;height:42px;border-radius:12px;background:{{ u.badgeBg }};color:{{ u.badgeColor }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px">{{ u.initials }}</span>
+                    <span style="flex:1;min-width:0">
+                      <span style="display:block;font-size:15px;font-weight:700;color:#18181B">{{ u.nombre }}</span>
+                      <span style="display:block;font-size:12.5px;font-weight:500;color:#52525B">{{ u.sub }}</span>
+                    </span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#A1A1AA"><path d="M9 6l6 6-6 6"/><path fill="none" stroke="#A1A1AA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ SELECTOR DE GALPÓN ============ -->
+        <sc-if value="{{ isSelector }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px 20px 30px">
+            <p style="font-size:14px;color:#52525B;font-weight:500;margin:4px 0 18px">Tenés varios galpones asignados. Elegí con cuál empezar — podés cambiar después.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ selectorGalpones }}" as="g" hint-placeholder-count="3">
+                <button onClick="{{ g.pick }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:18px 16px;border:1px solid #E4E4E7;background:#fff;border-radius:16px;cursor:pointer;text-align:left">
+                  <span style="flex:none;width:46px;height:46px;border-radius:13px;background:#CCFBF1;color:#0F766E;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></span>
+                  <span style="flex:1">
+                    <span style="display:block;font-size:17px;font-weight:800;color:#134E4A">{{ g.name }}</span>
+                    <span style="display:block;font-size:13px;font-weight:600;color:{{ g.subColor }};margin-top:2px">{{ g.sub }}</span>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ TRABAJADOR: REGISTRAR PRODUCCIÓN ============ -->
+        <sc-if value="{{ S.reg }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 18px 28px">
+            <sc-if value="{{ regProxyBanner }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:13px;padding:11px 13px;margin-bottom:14px">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#7C3AED"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20a8 8 0 0 1 16 0z"/></svg>
+                <span style="font-size:12.5px;font-weight:600;color:#5B21B6;line-height:1.3">{{ regProxyText }}</span>
+              </div>
+            </sc-if>
+
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:14px 15px;margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:13px;font-weight:700;color:#134E4A">{{ regTargetName }}</span>
+                <span style="font-size:12px;font-weight:600;color:#0F766E;background:#CCFBF1;padding:3px 9px;border-radius:999px">{{ regEdad }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:9px;font-size:12px;color:#A1A1AA;font-weight:600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10V6h-2v7h6v-2z"/></svg>
+                <span>Fecha, hora y responsable — se guardan solos ({{ nowStr }})</span>
+              </div>
+            </div>
+
+            <sc-if value="{{ regShowSummary }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#E7F7ED;border:1px solid #A7E3BE;border-radius:16px;padding:18px;text-align:center">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="#16A34A"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.4L6.4 12l1.4-1.4 2.9 2.9 5.5-5.5L17.6 9z"/></svg>
+                <div style="font-size:15px;font-weight:800;color:#166534;margin-top:8px">Ya registraste hoy</div>
+                <div style="font-size:14px;font-weight:600;color:#15803D;margin-top:3px">{{ regSummaryText }}</div>
+                <button onClick="{{ editRegistro }}" style="margin-top:15px;width:100%;height:48px;border:1px solid #16A34A;background:#fff;color:#16A34A;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">Actualizar el registro</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ regShowForm }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:9px">Aves muertas hoy</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:12px">
+                  <button onClick="{{ decMuertas }}" style="width:58px;height:58px;border:none;border-radius:14px;background:#F4F4F5;color:#134E4A;font-size:30px;font-weight:700;cursor:pointer;line-height:1">−</button>
+                  <span style="font-size:44px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ fMuertas }}</span>
+                  <button onClick="{{ incMuertas }}" style="width:58px;height:58px;border:none;border-radius:14px;background:#CCFBF1;color:#0F766E;font-size:30px;font-weight:700;cursor:pointer;line-height:1">+</button>
+                </div>
+
+                <div style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 9px">Alimento consumido hoy</div>
+                <div style="display:flex;gap:8px;margin-bottom:11px">
+                  <button onClick="{{ setTipoInicio }}" style="flex:1;height:44px;border-radius:12px;border:1px solid {{ tipoInicioBorder }};background:{{ tipoInicioBg }};color:{{ tipoInicioColor }};font-size:14px;font-weight:700;cursor:pointer">Súper Inicio</button>
+                  <button onClick="{{ setTipoFinal }}" style="flex:1;height:44px;border-radius:12px;border:1px solid {{ tipoFinalBorder }};background:{{ tipoFinalBg }};color:{{ tipoFinalColor }};font-size:14px;font-weight:700;cursor:pointer">Súper Final</button>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:12px">
+                  <button onClick="{{ decSacos }}" style="width:58px;height:58px;border:none;border-radius:14px;background:#F4F4F5;color:#134E4A;font-size:30px;font-weight:700;cursor:pointer;line-height:1">−</button>
+                  <span style="text-align:center"><span style="display:block;font-size:44px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums;line-height:1">{{ fSacos }}</span><span style="font-size:12px;font-weight:600;color:#A1A1AA">sacos</span></span>
+                  <button onClick="{{ incSacos }}" style="width:58px;height:58px;border:none;border-radius:14px;background:#CCFBF1;color:#0F766E;font-size:30px;font-weight:700;cursor:pointer;line-height:1">+</button>
+                </div>
+
+                <button onClick="{{ guardarRegistro }}" style="margin-top:22px;width:100%;height:54px;border:none;border-radius:15px;background:#0F766E;color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 10px 22px -8px rgba(15,118,110,.6)">Guardar registro de hoy</button>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <!-- ============ TRABAJADOR: TAREAS ASIGNADAS ============ -->
+        <sc-if value="{{ S.tareas_t }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 18px 28px">
+            <sc-if value="{{ tareasTrabajadorVacio }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:60px 20px;color:#A1A1AA">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="#D4D4D8"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                <p style="font-size:14px;font-weight:600;margin-top:10px">Sin tareas de mantenimiento asignadas por ahora.</p>
+              </div>
+            </sc-if>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ tareasTrabajador }}" as="t" hint-placeholder-count="3">
+                <button onClick="{{ t.toggle }}" style="display:flex;align-items:center;gap:13px;width:100%;padding:15px 14px;border:1px solid {{ t.border }};background:{{ t.bg }};border-radius:15px;cursor:pointer;text-align:left">
+                  <span style="flex:none;width:28px;height:28px;border-radius:9px;border:2px solid {{ t.checkBorder }};background:{{ t.checkBg }};display:flex;align-items:center;justify-content:center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" style="opacity:{{ t.checkOpacity }}"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+                  </span>
+                  <span style="flex:1">
+                    <span style="display:block;font-size:15px;font-weight:700;color:#18181B;text-decoration:{{ t.strike }}">{{ t.desc }}</span>
+                    <span style="display:block;font-size:12.5px;font-weight:600;color:#52525B;margin-top:2px">{{ t.meta }}</span>
+                  </span>
+                  <span style="flex:none;font-size:11px;font-weight:700;color:{{ t.chipColor }};background:{{ t.chipBg }};padding:4px 9px;border-radius:999px">{{ t.chip }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ TRABAJADOR: MIS REGISTROS ============ -->
+        <sc-if value="{{ S.misreg }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 18px 28px">
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Esta semana · lo que vos registraste</div>
+            <div style="position:relative;padding-left:22px">
+              <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:#E4E4E7"></div>
+              <sc-for list="{{ misRegistros }}" as="r" hint-placeholder-count="4">
+                <div style="position:relative;margin-bottom:12px">
+                  <span style="position:absolute;left:-22px;top:16px;width:12px;height:12px;border-radius:50%;background:{{ r.dot }};border:2px solid #FAFAF9"></span>
+                  <div style="background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:14px;font-weight:800;color:#134E4A">{{ r.fecha }}</span>
+                      <span style="font-size:11px;font-weight:600;color:#A1A1AA">{{ r.hora }}</span>
+                    </div>
+                    <div style="display:flex;gap:16px;margin-top:8px">
+                      <span style="font-size:13px;font-weight:600;color:#52525B"><b style="color:#DC2626;font-weight:800">{{ r.muertas }}</b> aves muertas</span>
+                      <span style="font-size:13px;font-weight:600;color:#52525B"><b style="color:#0F766E;font-weight:800">{{ r.sacos }}</b> sacos {{ r.tipo }}</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ TRABAJADOR: SOLICITAR PERMISO ============ -->
+        <sc-if value="{{ S.permiso_t }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 18px 28px">
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:16px">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em">Fecha del permiso</label>
+              <input value="{{ pFecha }}" onInput="{{ setPFecha }}" type="date" style="width:100%;height:48px;margin-top:7px;padding:0 14px;border:1px solid #E4E4E7;border-radius:13px;background:#FAFAF9;font-size:15px;font-weight:600;color:#18181B">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:15px">Motivo</label>
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button onClick="{{ setMotivoEnf }}" style="flex:1;height:42px;border-radius:11px;border:1px solid {{ mEnfB }};background:{{ mEnfBg }};color:{{ mEnfC }};font-size:13px;font-weight:700;cursor:pointer">Enfermedad</button>
+                <button onClick="{{ setMotivoPer }}" style="flex:1;height:42px;border-radius:11px;border:1px solid {{ mPerB }};background:{{ mPerBg }};color:{{ mPerC }};font-size:13px;font-weight:700;cursor:pointer">Personal</button>
+                <button onClick="{{ setMotivoOtro }}" style="flex:1;height:42px;border-radius:11px;border:1px solid {{ mOtroB }};background:{{ mOtroBg }};color:{{ mOtroC }};font-size:13px;font-weight:700;cursor:pointer">Otro</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:13px;font-size:12px;color:#A1A1AA;font-weight:600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10V6h-2v7h6v-2z"/></svg>
+                <span>Tu nombre y la fecha de envío se guardan solos</span>
+              </div>
+              <button onClick="{{ enviarPermiso }}" style="margin-top:16px;width:100%;height:52px;border:none;border-radius:14px;background:#0F766E;color:#fff;font-size:16px;font-weight:800;cursor:pointer">Enviar solicitud</button>
+            </div>
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin:22px 0 11px">Mis solicitudes</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ misPermisos }}" as="p" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:1">
+                    <span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ p.fecha }}</span>
+                    <span style="display:block;font-size:12.5px;font-weight:600;color:#52525B">{{ p.motivo }}</span>
+                  </span>
+                  <span style="flex:none;font-size:12px;font-weight:700;color:{{ p.color }};background:{{ p.bg }};padding:5px 11px;border-radius:999px">{{ p.estado }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ SUPERVISOR: GALPONES Y REGISTROS ============ -->
+        <sc-if value="{{ S.sup_home }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:flex;gap:10px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:14px;padding:12px 13px;margin-bottom:14px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#7C3AED" style="flex:none;margin-top:1px"><path d="M7 6h10l-2.5-2.5L16 2l5 5-5 5-1.5-1.5L17 8H7zM17 18H7l2.5 2.5L8 22l-5-5 5-5 1.5 1.5L7 16h10z"/></svg>
+              <span style="font-size:12.5px;font-weight:600;color:#5B21B6;line-height:1.35">{{ supTransfer }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ supGalpones }}" as="g" hint-placeholder-count="2">
+                <div style="background:#fff;border:1px solid #E4E4E7;border-left:5px solid {{ g.sevColor }};border-radius:16px;overflow:hidden">
+                  <div onClick="{{ g.open }}" style="padding:14px 15px;cursor:pointer">
+                    <div style="display:flex;align-items:center;justify-content:space-between">
+                      <span style="font-size:17px;font-weight:800;color:#134E4A">{{ g.name }}</span>
+                      <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:{{ g.sevColor }};background:{{ g.sevBg }};padding:4px 10px;border-radius:999px"><span data-icon="{{ g.regIcon }}">{{ g.sevText }}</span></span>
+                    </div>
+                    <div style="display:flex;align-items:baseline;gap:6px;margin-top:6px">
+                      <span style="font-size:26px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ g.vivos }}</span>
+                      <span style="font-size:12px;font-weight:600;color:#A1A1AA">aves vivas · {{ g.edad }}</span>
+                    </div>
+                    <div style="margin-top:11px;display:flex;flex-direction:column;gap:7px">
+                      <sc-for list="{{ g.bars }}" as="b" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:9px">
+                          <span style="width:58px;font-size:11px;font-weight:700;color:#52525B">{{ b.label }}</span>
+                          <span style="flex:1;height:8px;background:#F4F4F5;border-radius:999px;overflow:hidden"><span style="display:block;height:100%;width:{{ b.width }};background:{{ b.color }};border-radius:999px"></span></span>
+                          <span style="width:38px;text-align:right;font-size:11.5px;font-weight:800;color:{{ b.color }}">{{ b.pctText }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 15px;border-top:1px solid #F4F4F5;background:{{ g.regBg }}">
+                    <span style="display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:{{ g.regColor }}"><span style="display:flex">{{ g.regIconEl }}</span>{{ g.worker }} · {{ g.regText }}</span>
+                    <button onClick="{{ g.registrarPor }}" style="font-size:12px;font-weight:700;color:#0F766E;background:#fff;border:1px solid #99F6E4;border-radius:9px;padding:6px 11px;cursor:pointer">Registrar</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DETALLE DE GALPÓN (Supervisor + Dueño) ============ -->
+        <sc-if value="{{ detailScreen }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <sc-for list="{{ detChips }}" as="c" hint-placeholder-count="2">
+                <button onClick="{{ c.pick }}" style="flex:1;height:38px;border-radius:11px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:13px;font-weight:700;cursor:pointer">{{ c.name }}</button>
+              </sc-for>
+            </div>
+
+            <div style="background:#fff;border:1px solid #E4E4E7;border-left:5px solid {{ detSevColor }};border-radius:16px;padding:15px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <span style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em">{{ detEdad }}</span>
+                <span style="font-size:11px;font-weight:700;color:{{ detSevColor }};background:{{ detSevBg }};padding:4px 11px;border-radius:999px">{{ detSevText }}</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:12px">
+                <div><div style="font-size:22px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ detVivos }}</div><div style="font-size:11px;font-weight:600;color:#A1A1AA">aves vivas</div></div>
+                <div><div style="font-size:22px;font-weight:800;color:{{ detMortColor }};font-variant-numeric:tabular-nums">{{ detMortPct }}</div><div style="font-size:11px;font-weight:600;color:#A1A1AA">mortalidad</div></div>
+                <div><div style="font-size:22px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ detConsumo }}</div><div style="font-size:11px;font-weight:600;color:#A1A1AA">consumo</div></div>
+              </div>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin:20px 0 10px">Real vs. ideal · última semana</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:14px">
+              <sc-for list="{{ detBars }}" as="b" hint-placeholder-count="2">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">
+                    <span style="font-size:13px;font-weight:700;color:#18181B">{{ b.label }}</span>
+                    <span style="font-size:12px;font-weight:600;color:#A1A1AA">{{ b.real }} <span style="color:#D4D4D8">/ ideal {{ b.ideal }}</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="flex:1;height:10px;background:#F4F4F5;border-radius:999px;overflow:hidden"><span style="display:block;height:100%;width:{{ b.width }};background:{{ b.color }};border-radius:999px"></span></span>
+                    <span style="width:42px;text-align:right;font-size:13px;font-weight:800;color:{{ b.pctColor }}">{{ b.pctText }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin:20px 0 10px">Mortalidad diaria · mapa de calor</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px">
+              <div style="display:grid;grid-template-columns:30px repeat(7,1fr);gap:5px;margin-bottom:5px">
+                <span></span>
+                <span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">L</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">M</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">M</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">J</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">V</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">S</span><span style="text-align:center;font-size:10px;font-weight:700;color:#A1A1AA">D</span>
+              </div>
+              <sc-for list="{{ detHeat }}" as="r" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:30px repeat(7,1fr);gap:5px;margin-bottom:5px">
+                  <span style="display:flex;align-items:center;font-size:11px;font-weight:700;color:#A1A1AA">{{ r.s }}</span>
+                  <sc-for list="{{ r.dias }}" as="d" hint-placeholder-count="7">
+                    <span style="aspect-ratio:1;border-radius:7px;background:{{ d.bg }};color:{{ d.fg }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums">{{ d.n }}</span>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-top:20px">
+              <button onClick="{{ goMuestreoFromDet }}" style="flex:1;height:50px;border:1px solid #99F6E4;background:#fff;color:#0F766E;border-radius:13px;font-size:14px;font-weight:700;cursor:pointer">Muestreo de peso</button>
+              <sc-if value="{{ isDueno }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ goEntrega }}" style="flex:1;height:50px;border:none;background:#0F766E;color:#fff;border-radius:13px;font-size:14px;font-weight:700;cursor:pointer">Registrar entrega</button>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ SUPERVISOR: MUESTREO DE PESO ============ -->
+        <sc-if value="{{ S.muestreo }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <sc-for list="{{ detChips }}" as="c" hint-placeholder-count="2">
+                <button onClick="{{ c.pick }}" style="flex:1;height:38px;border-radius:11px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:13px;font-weight:700;cursor:pointer">{{ c.name }}</button>
+              </sc-for>
+            </div>
+            <div style="background:#CCFBF1;border-radius:14px;padding:13px 15px;margin-bottom:16px">
+              <span style="font-size:13px;font-weight:600;color:#134E4A;line-height:1.4">{{ detName }} tiene <b>{{ detVivos }}</b> aves vivas → muestra sugerida: <b>{{ detMuestra }} aves</b> (10%).</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ muestreoBloques }}" as="b" hint-placeholder-count="3">
+                <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:14px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:11px">
+                    <span style="font-size:13px;font-weight:800;color:#134E4A">{{ b.idx }}</span>
+                    <span style="font-size:12px;font-weight:700;color:#0F766E">{{ b.prom }}</span>
+                  </div>
+                  <div style="display:flex;gap:10px">
+                    <label style="flex:1"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;margin-bottom:4px">Aves pesadas</span><input value="{{ b.aves }}" onInput="{{ b.setAves }}" type="number" inputmode="numeric" placeholder="0" style="width:100%;height:46px;padding:0 12px;border:1px solid #E4E4E7;border-radius:11px;background:#FAFAF9;font-size:16px;font-weight:700;color:#18181B"></label>
+                    <label style="flex:1"><span style="display:block;font-size:11px;font-weight:600;color:#A1A1AA;margin-bottom:4px">Peso total (lb)</span><input value="{{ b.peso }}" onInput="{{ b.setPeso }}" type="number" inputmode="decimal" placeholder="0" style="width:100%;height:46px;padding:0 12px;border:1px solid #E4E4E7;border-radius:11px;background:#FAFAF9;font-size:16px;font-weight:700;color:#18181B"></label>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#134E4A;border-radius:14px;padding:14px 16px;margin-top:14px">
+              <span style="font-size:13px;font-weight:600;color:#99F6E4">Peso promedio general</span>
+              <span style="font-size:20px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums">{{ muestreoPromGeneral }}</span>
+            </div>
+            <button onClick="{{ guardarMuestreo }}" style="margin-top:16px;width:100%;height:54px;border:none;border-radius:15px;background:#0F766E;color:#fff;font-size:16px;font-weight:800;cursor:pointer">Guardar muestreo de la semana</button>
+          </div>
+        </sc-if>
+
+        <!-- ============ SUPERVISOR: INVENTARIO Y BODEGA ============ -->
+        <sc-if value="{{ S.inventario }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Saldo en bodega general</div>
+            <div style="display:flex;gap:10px;margin-bottom:20px">
+              <sc-for list="{{ bodegaSaldos }}" as="s" hint-placeholder-count="2">
+                <div style="flex:1;background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:14px">
+                  <div style="font-size:28px;font-weight:800;color:{{ s.color }};font-variant-numeric:tabular-nums">{{ s.sacos }}</div>
+                  <div style="font-size:12px;font-weight:600;color:#52525B;margin-top:2px">{{ s.tipo }}</div>
+                  <div style="font-size:11px;font-weight:600;color:#A1A1AA">sacos</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px">
+              <div style="font-size:14px;font-weight:800;color:#134E4A;margin-bottom:12px">Transferir de bodega a un galpón</div>
+              <div style="display:flex;gap:8px;margin-bottom:11px">
+                <button onClick="{{ setInvInicio }}" style="flex:1;height:42px;border-radius:11px;border:1px solid {{ invInicioBorder }};background:{{ invInicioBg }};color:{{ invInicioColor }};font-size:13px;font-weight:700;cursor:pointer">Súper Inicio</button>
+                <button onClick="{{ setInvFinal }}" style="flex:1;height:42px;border-radius:11px;border:1px solid {{ invFinalBorder }};background:{{ invFinalBg }};color:{{ invFinalColor }};font-size:13px;font-weight:700;cursor:pointer">Súper Final</button>
+              </div>
+              <div style="display:flex;gap:7px;margin-bottom:11px">
+                <sc-for list="{{ invGalponChips }}" as="c" hint-placeholder-count="3">
+                  <button onClick="{{ c.pick }}" style="flex:1;height:40px;border-radius:10px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:11.5px;font-weight:700;cursor:pointer;padding:0 4px">{{ c.name }}</button>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#FAFAF9;border:1px solid #E4E4E7;border-radius:13px;padding:8px">
+                <button onClick="{{ decInvSacos }}" style="width:48px;height:48px;border:none;border-radius:11px;background:#F4F4F5;color:#134E4A;font-size:26px;font-weight:700;cursor:pointer">−</button>
+                <span style="text-align:center"><span style="display:block;font-size:32px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums;line-height:1">{{ invSacos }}</span><span style="font-size:11px;font-weight:600;color:#A1A1AA">sacos</span></span>
+                <button onClick="{{ incInvSacos }}" style="width:48px;height:48px;border:none;border-radius:11px;background:#CCFBF1;color:#0F766E;font-size:26px;font-weight:700;cursor:pointer">+</button>
+              </div>
+              <button onClick="{{ guardarInventario }}" style="margin-top:14px;width:100%;height:50px;border:none;border-radius:13px;background:#0F766E;color:#fff;font-size:15px;font-weight:800;cursor:pointer">Registrar transferencia</button>
+            </div>
+
+            <button onClick="{{ goTraslado }}" style="width:100%;margin-top:14px;display:flex;align-items:center;gap:12px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:14px;padding:14px;cursor:pointer;text-align:left">
+              <span style="flex:none;width:38px;height:38px;border-radius:11px;background:#EDE9FE;color:#7C3AED;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 6h10l-2.5-2.5L16 2l5 5-5 5-1.5-1.5L17 8H7zM17 18H7l2.5 2.5L8 22l-5-5 5-5 1.5 1.5L7 16h10z"/></svg></span>
+              <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#5B21B6">Trasladar aves a otro galpón</span><span style="display:block;font-size:12px;font-weight:600;color:#7C3AED">Opcional · solo si movés el lote</span></span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin:22px 0 11px">Movimientos recientes</div>
+            <div style="position:relative;padding-left:22px">
+              <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:#E4E4E7"></div>
+              <sc-for list="{{ movimientos }}" as="m" hint-placeholder-count="4">
+                <div style="position:relative;margin-bottom:11px">
+                  <span style="position:absolute;left:-22px;top:15px;width:12px;height:12px;border-radius:50%;background:{{ m.dot }};border:2px solid #FAFAF9"></span>
+                  <div style="background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:12px 13px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:13px;font-weight:800;color:#18181B">{{ m.sign }}{{ m.n }} · {{ m.tipo }}</span>
+                      <span style="font-size:11px;font-weight:600;color:#A1A1AA">{{ m.fecha }}</span>
+                    </div>
+                    <div style="font-size:12px;font-weight:600;color:{{ m.dirColor }};margin-top:3px">{{ m.dirText }} · {{ m.destino }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ SUPERVISOR: TRASLADAR AVES (opcional) ============ -->
+        <sc-if value="{{ S.traslado }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:flex;gap:10px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:14px;padding:13px 14px;margin-bottom:16px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#7C3AED" style="flex:none;margin-top:1px"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>
+              <span style="font-size:12.5px;font-weight:600;color:#5B21B6;line-height:1.4">Este paso es <b>opcional</b>. Úsalo solo si vas a mover el lote a otro galpón — el registro normal no lo necesita.</span>
+            </div>
+
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px">
+              <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.04em">Galpón de origen</div>
+              <div style="font-size:16px;font-weight:800;color:#134E4A;margin-top:3px">{{ trasOrigen }}</div>
+              <div style="font-size:11px;font-weight:600;color:#A1A1AA;margin-top:2px">Preseleccionado · galpón activo</div>
+
+              <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.04em;margin:15px 0 7px">Galpón de destino</div>
+              <div style="display:flex;gap:8px">
+                <sc-for list="{{ trasChips }}" as="c" hint-placeholder-count="2">
+                  <button onClick="{{ c.pick }}" style="flex:1;height:44px;border-radius:11px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:13px;font-weight:700;cursor:pointer">{{ c.name }}</button>
+                </sc-for>
+              </div>
+
+              <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.04em;margin:15px 0 7px">Cantidad de aves</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#FAFAF9;border:1px solid #E4E4E7;border-radius:13px;padding:8px">
+                <button onClick="{{ decTras }}" style="width:48px;height:48px;border:none;border-radius:11px;background:#F4F4F5;color:#5B21B6;font-size:24px;font-weight:700;cursor:pointer">−</button>
+                <span style="font-size:32px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ trasCantidad }}</span>
+                <button onClick="{{ incTras }}" style="width:48px;height:48px;border:none;border-radius:11px;background:#EDE9FE;color:#7C3AED;font-size:24px;font-weight:700;cursor:pointer">+</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:#A1A1AA;font-weight:600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10V6h-2v7h6v-2z"/></svg>
+                <span>No se cuenta como mortalidad: se resta del origen y se suma al destino.</span>
+              </div>
+              <button onClick="{{ guardarTraslado }}" style="margin-top:14px;width:100%;height:52px;border:none;border-radius:14px;background:#7C3AED;color:#fff;font-size:15px;font-weight:800;cursor:pointer">Registrar traslado</button>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin:22px 0 11px">Traslados de esta cosecha</div>
+            <div style="position:relative;padding-left:22px">
+              <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:#EDE9FE"></div>
+              <sc-for list="{{ trasHistorial }}" as="t" hint-placeholder-count="2">
+                <div style="position:relative;margin-bottom:11px">
+                  <span style="position:absolute;left:-22px;top:15px;width:12px;height:12px;border-radius:50%;background:#7C3AED;border:2px solid #FAFAF9"></span>
+                  <div style="background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:12px 13px">
+                    <div style="font-size:11px;font-weight:600;color:#A1A1AA">{{ t.fecha }}</div>
+                    <div style="font-size:13px;font-weight:700;color:#5B21B6;margin-top:2px">{{ t.texto }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ TAREAS DEL EQUIPO (Supervisor) / CALENDARIO (Dueño) ============ -->
+        <sc-if value="{{ tasksScreen }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <span style="font-size:13px;font-weight:700;color:#134E4A">Esta semana · mantenimiento</span>
+              <button onClick="{{ toggleAddTask }}" style="display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:#fff;background:#0F766E;border:none;border-radius:10px;padding:8px 12px;cursor:pointer"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg>Nueva tarea</button>
+            </div>
+
+            <sc-if value="{{ showAddTask }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border:1px solid #99F6E4;border-radius:16px;padding:15px;margin-bottom:14px">
+                <input value="{{ tDesc }}" onInput="{{ setTDesc }}" placeholder="Descripción (ej. Limpieza de comederos)" style="width:100%;height:46px;padding:0 13px;border:1px solid #E4E4E7;border-radius:11px;background:#FAFAF9;font-size:14px;font-weight:600;color:#18181B">
+                <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;margin:12px 0 6px">Galpón</div>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ tGalponChips }}" as="c" hint-placeholder-count="3">
+                    <button onClick="{{ c.pick }}" style="flex:1;height:38px;border-radius:10px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:11px;font-weight:700;cursor:pointer;padding:0 3px">{{ c.name }}</button>
+                  </sc-for>
+                </div>
+                <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;margin:12px 0 6px">Asignar a</div>
+                <div style="display:flex;gap:6px">
+                  <sc-for list="{{ tWorkerChips }}" as="c" hint-placeholder-count="3">
+                    <button onClick="{{ c.pick }}" style="flex:1;height:38px;border-radius:10px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:12px;font-weight:700;cursor:pointer">{{ c.name }}</button>
+                  </sc-for>
+                </div>
+                <button onClick="{{ nuevaTarea }}" style="margin-top:14px;width:100%;height:48px;border:none;border-radius:12px;background:#0F766E;color:#fff;font-size:14px;font-weight:800;cursor:pointer">Crear tarea</button>
+              </div>
+            </sc-if>
+
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ tareasEquipo }}" as="t" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:none;width:10px;height:10px;border-radius:50%;background:{{ t.dot }}"></span>
+                  <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ t.desc }}</span><span style="display:block;font-size:12px;font-weight:600;color:#52525B">{{ t.meta }}</span></span>
+                  <span style="flex:none;font-size:11px;font-weight:700;color:{{ t.chipColor }};background:{{ t.chipBg }};padding:4px 10px;border-radius:999px">{{ t.chip }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ SUPERVISOR: PERMISOS DEL EQUIPO (solo lectura) ============ -->
+        <sc-if value="{{ S.permisos_s }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <div style="display:flex;gap:8px;background:#FEF3C7;border-radius:12px;padding:11px 13px;margin-bottom:16px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#D97706" style="flex:none"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>
+              <span style="font-size:12.5px;font-weight:600;color:#92400E;line-height:1.35">Podés ver el estado, pero la aprobación final es del Dueño.</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ permisosEquipo }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ p.worker }}</span><span style="display:block;font-size:12.5px;font-weight:600;color:#52525B">{{ p.fecha }} · {{ p.motivo }}</span></span>
+                  <span style="flex:none;font-size:12px;font-weight:700;color:{{ p.color }};background:{{ p.bg }};padding:5px 11px;border-radius:999px">{{ p.estado }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: RESUMEN DE LA GRANJA ============ -->
+        <sc-if value="{{ S.due_home }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+              <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+                <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:14px 15px">
+                  <div style="font-size:27px;font-weight:800;color:{{ k.c }};font-variant-numeric:tabular-nums;line-height:1">{{ k.n }}</div>
+                  <div style="font-size:12px;font-weight:600;color:#52525B;margin-top:5px">{{ k.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;gap:11px;background:#F5F3FF;border:1px solid #DDD6FE;border-radius:14px;padding:13px 14px;margin-bottom:18px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#7C3AED" style="flex:none;margin-top:1px"><path d="M3 5h11v9H3zM14 8h4l3 3v3h-7zM7 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+              <span style="flex:1"><span style="display:block;font-size:13.5px;font-weight:800;color:#5B21B6">Cosecha mayo 2026 · en entrega</span><span style="display:block;font-size:12px;font-weight:600;color:#52525B;margin-top:2px">5 entregas registradas a planta · quedan 9,084 aves en la granja pendientes de entregar.</span></span>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Requiere tu atención</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px">
+              <sc-for list="{{ topAlertas }}" as="a" hint-placeholder-count="2">
+                <button onClick="{{ goAlertas }}" style="display:flex;gap:11px;width:100%;background:{{ a.bg }};border:1px solid {{ a.border }};border-radius:14px;padding:13px 14px;cursor:pointer;text-align:left">
+                  <span style="flex:none;margin-top:1px">{{ a.iconEl }}</span>
+                  <span style="flex:1"><span style="display:block;font-size:13.5px;font-weight:800;color:{{ a.color }}">{{ a.titulo }} · {{ a.galpon }}</span><span style="display:block;font-size:12px;font-weight:600;color:#52525B;margin-top:2px">{{ a.detalle }}</span></span>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Galpones activos</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+              <sc-for list="{{ dueGalpones }}" as="g" hint-placeholder-count="2">
+                <div onClick="{{ g.open }}" style="background:#fff;border:1px solid #E4E4E7;border-left:5px solid {{ g.sevColor }};border-radius:16px;padding:14px 15px;cursor:pointer">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:16px;font-weight:800;color:#134E4A">{{ g.name }}</span>
+                    <span style="font-size:11px;font-weight:700;color:{{ g.sevColor }};background:{{ g.sevBg }};padding:4px 10px;border-radius:999px">{{ g.sevText }}</span>
+                  </div>
+                  <div style="display:flex;gap:18px;margin-top:7px">
+                    <span><b style="font-size:19px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ g.vivos }}</b> <span style="font-size:11px;color:#A1A1AA;font-weight:600">vivas</span></span>
+                    <span><b style="font-size:19px;font-weight:800;color:{{ g.sevColor }};font-variant-numeric:tabular-nums">{{ g.mortPct }}</b> <span style="font-size:11px;color:#A1A1AA;font-weight:600">mortalidad</span></span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Tendencia · últimos 6 meses</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px 12px 8px;margin-bottom:18px">
+              <div style="display:flex;gap:16px;padding:0 6px 8px">
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#0F766E"><span style="width:14px;height:3px;background:#0F766E;border-radius:2px"></span>Peso prom. (lb)</span>
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#DC2626"><span style="width:14px;height:3px;background:#DC2626;border-radius:2px"></span>Mortalidad (%)</span>
+              </div>
+              {{ trendChartEl }}
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Acciones rápidas</div>
+            <div style="display:flex;gap:10px">
+              <button onClick="{{ goRegDueno }}" style="flex:1;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0F766E"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg><span style="font-size:11.5px;font-weight:700;color:#18181B">Registrar</span></button>
+              <button onClick="{{ goCalendario }}" style="flex:1;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0F766E"><path d="M7 2v2H5a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2V2h-2v2H9V2zM6 9h12v9H6z"/></svg><span style="font-size:11.5px;font-weight:700;color:#18181B">Nueva tarea</span></button>
+              <button onClick="{{ goBodega }}" style="flex:1;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:14px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#0F766E"><path d="M3 7 12 3l9 4v10l-9 4-9-4zm9 0 9-4M12 21V11"/></svg><span style="font-size:11.5px;font-weight:700;color:#18181B">Bodega</span></button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: HISTORIAL DE COSECHAS ============ -->
+        <sc-if value="{{ S.historial }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px 12px 8px;margin-bottom:18px">
+              <div style="display:flex;gap:16px;padding:0 6px 8px">
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#0F766E"><span style="width:14px;height:3px;background:#0F766E;border-radius:2px"></span>Peso prom.</span>
+                <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#DC2626"><span style="width:14px;height:3px;background:#DC2626;border-radius:2px"></span>Mortalidad %</span>
+              </div>
+              {{ trendChartEl }}
+            </div>
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Cosechas cerradas</div>
+            <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:20px">
+              <sc-for list="{{ historialCards }}" as="h" hint-placeholder-count="3">
+                <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:15px;font-weight:800;color:#134E4A">{{ h.nombre }}</span>
+                    <span style="font-size:11px;font-weight:700;color:{{ h.mortColor }};background:{{ h.mortBg }};padding:4px 10px;border-radius:999px">{{ h.mort }}</span>
+                  </div>
+                  <div style="font-size:12px;font-weight:600;color:#A1A1AA;margin-top:2px">{{ h.periodo }}</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:12px">
+                    <div><div style="font-size:15px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ h.aves }}</div><div style="font-size:10px;font-weight:600;color:#A1A1AA">aves</div></div>
+                    <div><div style="font-size:15px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ h.peso }}</div><div style="font-size:10px;font-weight:600;color:#A1A1AA">peso prom.</div></div>
+                    <div><div style="font-size:15px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ h.conv }}</div><div style="font-size:10px;font-weight:600;color:#A1A1AA">conversión</div></div>
+                    <div><div style="font-size:15px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">{{ h.kg }}</div><div style="font-size:10px;font-weight:600;color:#A1A1AA">kg planta</div></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <span style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em">Entregas · Cosecha mayo 2026</span>
+              <span style="font-size:10px;font-weight:700;color:#D97706;background:#FEF3C7;padding:3px 8px;border-radius:999px;text-transform:uppercase">En entrega</span>
+            </div>
+            <div style="position:relative;padding-left:22px;margin-bottom:20px">
+              <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:#E4E4E7"></div>
+              <sc-for list="{{ entregasActivas }}" as="e" hint-placeholder-count="5">
+                <div style="position:relative;margin-bottom:11px">
+                  <span style="position:absolute;left:-22px;top:15px;width:12px;height:12px;border-radius:50%;background:{{ e.dot }};border:2px solid #FAFAF9"></span>
+                  <div style="background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:12px 13px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:13px;font-weight:800;color:#134E4A">{{ e.galpon }} · {{ e.peso }}</span>
+                      <span style="font-size:11px;font-weight:600;color:#A1A1AA">{{ e.dias }}</span>
+                    </div>
+                    <div style="font-size:12px;font-weight:600;color:#A1A1AA;margin-top:3px">{{ e.resp }} · prom. {{ e.prom }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Entregas · Cosecha enero 2026</div>
+            <div style="position:relative;padding-left:22px">
+              <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:#E4E4E7"></div>
+              <sc-for list="{{ entregasEnero }}" as="e" hint-placeholder-count="4">
+                <div style="position:relative;margin-bottom:11px">
+                  <span style="position:absolute;left:-22px;top:15px;width:12px;height:12px;border-radius:50%;background:{{ e.dot }};border:2px solid #FAFAF9"></span>
+                  <div style="background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:12px 13px">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                      <span style="font-size:13px;font-weight:800;color:#134E4A">{{ e.galpon }} · {{ e.peso }}</span>
+                      <span style="font-size:11px;font-weight:600;color:#A1A1AA">{{ e.dias }}</span>
+                    </div>
+                    <div style="font-size:12px;font-weight:600;color:#52525B;margin-top:3px">{{ e.resp }} · prom. {{ e.prom }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: BODEGA Y COSTOS ============ -->
+        <sc-if value="{{ S.bodega }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:14px 16px 28px">
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Saldo de bodega general</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px;display:flex;align-items:center;gap:16px;margin-bottom:18px">
+              <span style="flex:none">{{ donutEl }}</span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+                <div><div style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:#0F766E"></span><span style="font-size:13px;font-weight:700;color:#18181B">Súper Inicio</span></div><div style="font-size:15px;font-weight:800;color:#134E4A;margin-left:18px">245 sacos</div></div>
+                <div><div style="display:flex;align-items:center;gap:7px"><span style="width:11px;height:11px;border-radius:3px;background:#D97706"></span><span style="font-size:13px;font-weight:700;color:#18181B">Súper Final</span></div><div style="font-size:15px;font-weight:800;color:#92400E;margin-left:18px">180 sacos</div></div>
+              </div>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Sacos enviados por galpón · cosecha activa</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+              <sc-for list="{{ sacosGalpon }}" as="s" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12.5px;font-weight:700;color:#18181B">{{ s.g }}</span><span style="font-size:12.5px;font-weight:800;color:#0F766E">{{ s.n }}</span></div>
+                  <span style="display:block;height:9px;background:#F4F4F5;border-radius:999px;overflow:hidden"><span style="display:block;height:100%;width:{{ s.width }};background:#0F766E;border-radius:999px"></span></span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Costo de alimento por cosecha</div>
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px;display:flex;flex-direction:column;gap:14px">
+              <sc-for list="{{ costos }}" as="c" hint-placeholder-count="3">
+                <div>
+                  <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12.5px;font-weight:700;color:#18181B">{{ c.label }}</span><span style="font-size:12.5px;font-weight:800;color:#134E4A;font-variant-numeric:tabular-nums">{{ c.monto }}</span></div>
+                  <span style="display:block;height:11px;background:#F4F4F5;border-radius:999px;overflow:hidden"><span style="display:block;height:100%;width:{{ c.width }};background:#134E4A;border-radius:999px"></span></span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: ALERTAS ============ -->
+        <sc-if value="{{ S.alertas }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px;display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ alertCards }}" as="a" hint-placeholder-count="5">
+              <div style="display:flex;gap:12px;background:{{ a.bg }};border:1px solid {{ a.border }};border-radius:16px;padding:14px 15px">
+                <span style="flex:none;margin-top:1px">{{ a.iconEl }}</span>
+                <span style="flex:1">
+                  <span style="display:flex;align-items:center;gap:8px"><span style="font-size:14px;font-weight:800;color:{{ a.color }}">{{ a.titulo }}</span><span style="font-size:10px;font-weight:700;color:#fff;background:{{ a.color }};padding:2px 7px;border-radius:999px;text-transform:uppercase">{{ a.sevText }}</span></span>
+                  <span style="display:block;font-size:12.5px;font-weight:600;color:#52525B;margin-top:4px;line-height:1.35">{{ a.detalle }}</span>
+                  <span style="display:block;font-size:11.5px;font-weight:700;color:{{ a.color }};margin-top:5px">{{ a.galpon }}</span>
+                </span>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: PERMISOS (APROBACIÓN) ============ -->
+        <sc-if value="{{ S.permisos_d }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <sc-if value="{{ permisosPendientesVacio }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:50px 20px;color:#A1A1AA"><svg width="42" height="42" viewBox="0 0 24 24" fill="#D4D4D8"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.4L6.4 12l1.4-1.4 2.9 2.9 5.5-5.5L17.6 9z"/></svg><p style="font-size:14px;font-weight:600;margin-top:10px">No hay solicitudes de permiso pendientes.</p></div>
+            </sc-if>
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:11px">Pendientes de decisión</div>
+            <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:22px">
+              <sc-for list="{{ permisosPendientes }}" as="p" hint-placeholder-count="2">
+                <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:15px">
+                  <div style="font-size:15px;font-weight:800;color:#134E4A">{{ p.worker }}</div>
+                  <div style="font-size:12.5px;font-weight:600;color:#52525B;margin-top:2px">Solicita el {{ p.fecha }} · {{ p.motivo }}</div>
+                  <div style="display:flex;gap:10px;margin-top:13px">
+                    <button onClick="{{ p.rechazar }}" style="flex:1;height:46px;border:1px solid #FCA5A5;background:#fff;color:#DC2626;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Rechazar</button>
+                    <button onClick="{{ p.aprobar }}" style="flex:1;height:46px;border:none;background:#16A34A;color:#fff;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Aprobar</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:11px">Resueltas</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ permisosResueltos }}" as="p" hint-placeholder-count="1">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ p.worker }}</span><span style="display:block;font-size:12.5px;font-weight:600;color:#52525B">{{ p.fecha }} · {{ p.motivo }}</span></span>
+                  <span style="flex:none;font-size:12px;font-weight:700;color:{{ p.color }};background:{{ p.bg }};padding:5px 11px;border-radius:999px">{{ p.estado }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: USUARIOS ============ -->
+        <sc-if value="{{ S.usuarios_d }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <button onClick="{{ addUsuario }}" style="width:100%;height:50px;border:1px dashed #99F6E4;background:#F0FDFA;color:#0F766E;border-radius:14px;font-size:15px;font-weight:800;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:7px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg>Agregar usuario</button>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ usuariosOperativos }}" as="u" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:none;width:40px;height:40px;border-radius:12px;background:{{ u.rolBg }};color:{{ u.rolColor }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">{{ u.initials }}</span>
+                  <span style="flex:1"><span style="display:block;font-size:14.5px;font-weight:700;color:#18181B">{{ u.nombre }}</span><span style="display:block;font-size:12px;font-weight:600;color:#A1A1AA">{{ u.galpones }}</span></span>
+                  <span style="flex:none;font-size:11px;font-weight:700;color:{{ u.rolColor }};background:{{ u.rolBg }};padding:4px 10px;border-radius:999px">{{ u.rol }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: APERTURA DE COSECHA NUEVA ============ -->
+        <sc-if value="{{ S.nueva_cosecha }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:16px">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em">Cantidad de aves recibidas</label>
+              <input value="{{ cosAves }}" onInput="{{ setCosAves }}" type="number" inputmode="numeric" placeholder="0" style="width:100%;height:52px;margin-top:7px;padding:0 15px;border:1px solid #E4E4E7;border-radius:13px;background:#FAFAF9;font-size:20px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:16px">Galpón de recepción</label>
+              <div style="display:flex;gap:8px;margin-top:7px">
+                <sc-for list="{{ cosGalponChips }}" as="c" hint-placeholder-count="1">
+                  <button onClick="{{ c.pick }}" style="flex:1;height:46px;border-radius:12px;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:13px;font-weight:700;cursor:pointer">{{ c.name }}</button>
+                </sc-for>
+              </div>
+              <div style="font-size:11px;font-weight:600;color:#A1A1AA;margin-top:6px">Solo se muestran galpones libres.</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;color:#A1A1AA;font-weight:600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10V6h-2v7h6v-2z"/></svg>
+                <span>Fecha de ingreso: hoy (jueves 16 jul). Se guarda sola.</span>
+              </div>
+              <button onClick="{{ abrirCosecha }}" style="margin-top:16px;width:100%;height:54px;border:none;border-radius:15px;background:#0F766E;color:#fff;font-size:16px;font-weight:800;cursor:pointer">Abrir cosecha</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DUEÑO: REGISTRAR ENTREGA A PLANTA ============ -->
+        <sc-if value="{{ S.entrega }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <div style="background:#fff;border:1px solid #E4E4E7;border-radius:16px;padding:16px">
+              <div style="font-size:11px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.04em">Galpón de origen</div>
+              <div style="font-size:16px;font-weight:800;color:#134E4A;margin-top:3px">{{ detName }}</div>
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:16px">Aves entregadas</label>
+              <input value="{{ entAves }}" onInput="{{ setEntAves }}" type="number" inputmode="numeric" placeholder="0" style="width:100%;height:50px;margin-top:7px;padding:0 15px;border:1px solid #E4E4E7;border-radius:13px;background:#FAFAF9;font-size:18px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">
+              <label style="font-size:12px;font-weight:700;color:#52525B;text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:14px">Peso total entregado (lb)</label>
+              <input value="{{ entPeso }}" onInput="{{ setEntPeso }}" type="number" inputmode="decimal" placeholder="0" style="width:100%;height:50px;margin-top:7px;padding:0 15px;border:1px solid #E4E4E7;border-radius:13px;background:#FAFAF9;font-size:18px;font-weight:800;color:#18181B;font-variant-numeric:tabular-nums">
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#F0FDFA;border-radius:12px;padding:12px 14px;margin-top:14px">
+                <span style="font-size:13px;font-weight:600;color:#0F766E">Peso promedio (auto)</span>
+                <span style="font-size:17px;font-weight:800;color:#134E4A;font-variant-numeric:tabular-nums">{{ entPromedio }}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:#A1A1AA;font-weight:600">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10V6h-2v7h6v-2z"/></svg>
+                <span>Puede haber varias entregas parciales. Fecha y responsable, automáticos.</span>
+              </div>
+              <button onClick="{{ guardarEntrega }}" style="margin-top:16px;width:100%;height:54px;border:none;border-radius:15px;background:#0F766E;color:#fff;font-size:16px;font-weight:800;cursor:pointer">Guardar entrega</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ ADMIN: SISTEMA ============ -->
+        <sc-if value="{{ S.adm_home }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Granjas registradas</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:12px">
+              <sc-for list="{{ admGranjas }}" as="g" hint-placeholder-count="1">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:14px">
+                  <span style="flex:none;width:40px;height:40px;border-radius:12px;background:#F4F4F5;color:#52525B;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 21V9l9-6 9 6v12h-6v-7H9v7z"/></svg></span>
+                  <span style="flex:1"><span style="display:block;font-size:15px;font-weight:800;color:#18181B">{{ g.nombre }}</span><span style="display:block;font-size:12px;font-weight:600;color:#A1A1AA">{{ g.galpones }} · {{ g.estado }}</span></span>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ admAddGranja }}" style="width:100%;height:44px;border:1px dashed #D4D4D8;background:#fff;color:#52525B;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:22px">+ Agregar granja</button>
+
+            <div style="font-size:12px;font-weight:700;color:#A1A1AA;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Galpones de Granja Inmeca</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:12px">
+              <sc-for list="{{ admGalpones }}" as="g" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ g.nombre }}</span><span style="display:block;font-size:12px;font-weight:600;color:#A1A1AA">{{ g.estado }}</span></span>
+                  <span style="flex:none;font-size:12px;font-weight:700;color:#52525B">Editar</span>
+                </div>
+              </sc-for>
+            </div>
+            <button onClick="{{ admAddGalpon }}" style="width:100%;height:44px;border:1px dashed #D4D4D8;background:#fff;color:#52525B;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:22px">+ Agregar galpón</button>
+
+            <div style="background:#F4F4F5;border:1px solid #E4E4E7;border-radius:14px;padding:15px">
+              <div style="font-size:13px;font-weight:800;color:#52525B">Tabla técnica de valores ideales</div>
+              <div style="font-size:12px;font-weight:600;color:#A1A1AA;margin-top:3px;line-height:1.35">Precargada con los valores actuales de Inmeca. No editable en esta versión.</div>
+              <button disabled style="margin-top:11px;width:100%;height:42px;border:1px solid #E4E4E7;background:#fff;color:#D4D4D8;border-radius:11px;font-size:13px;font-weight:700;cursor:not-allowed">Editar tabla (próximamente)</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ ADMIN: USUARIOS DE PLATAFORMA ============ -->
+        <sc-if value="{{ S.adm_users }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px 16px 28px">
+            <button onClick="{{ admAddUser }}" style="width:100%;height:48px;border:1px dashed #D4D4D8;background:#fff;color:#52525B;border-radius:13px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:16px">+ Agregar usuario</button>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ admUsuarios }}" as="u" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E4E4E7;border-radius:14px;padding:13px 14px">
+                  <span style="flex:1"><span style="display:block;font-size:14px;font-weight:700;color:#18181B">{{ u.nombre }}</span><span style="display:block;font-size:12px;font-weight:600;color:#A1A1AA">{{ u.user }}</span></span>
+                  <span style="flex:none;font-size:11px;font-weight:700;color:{{ u.rolColor }};background:{{ u.rolBg }};padding:4px 10px;border-radius:999px">{{ u.rol }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+
+      <!-- ============ BOTTOM NAV ============ -->
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;background:#fff;border-top:1px solid #E4E4E7;padding:8px 6px 22px;display:flex;z-index:15">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <button onClick="{{ n.go }}" style="flex:1;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 2px;color:{{ n.color }}">
+              <span style="display:flex" data-icon="{{ n.icon }}">{{ n.iconEl }}</span>
+              <span style="font-size:10.5px;font-weight:700;letter-spacing:-.01em">{{ n.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- ============ TOAST ============ -->
+      <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;bottom:96px;left:50%;transform:translateX(-50%);width:340px;background:#134E4A;color:#fff;border-radius:14px;padding:13px 16px;box-shadow:0 14px 34px -8px rgba(0,0,0,.45);z-index:80;animation:toastIn .28s ease;display:flex;gap:11px;align-items:flex-start">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#5EEAD4" style="flex:none;margin-top:1px"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.4L6.4 12l1.4-1.4 2.9 2.9 5.5-5.5L17.6 9z"/></svg>
+          <span style="font-size:13.5px;font-weight:600;line-height:1.35">{{ toast }}</span>
+        </div>
+      </sc-if>
+
+      <!-- ============ MODAL ============ -->
+      <sc-if value="{{ modal }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(9,9,11,.5);z-index:90;display:flex;align-items:center;justify-content:center;padding:28px;animation:fadeIn .2s ease">
+          <div style="background:#fff;border-radius:20px;padding:24px;width:100%;max-width:320px" onClick="{{ stopProp }}">
+            <div style="font-size:18px;font-weight:800;color:#134E4A">{{ modalTitle }}</div>
+            <div style="font-size:14px;font-weight:500;color:#52525B;margin-top:8px;line-height:1.4">{{ modalBody }}</div>
+            <div style="display:flex;gap:10px;margin-top:20px">
+              <button onClick="{{ closeModal }}" style="flex:1;height:48px;border:1px solid #E4E4E7;background:#fff;color:#52525B;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">Cancelar</button>
+              <button onClick="{{ modalConfirm }}" style="flex:1;height:48px;border:none;background:{{ modalConfirmBg }};color:#fff;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer">{{ modalConfirmText }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ============ MÁS (bottom sheet Dueño) ============ -->
+      <sc-if value="{{ masOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeMas }}" style="position:absolute;inset:0;background:rgba(9,9,11,.45);z-index:85;display:flex;align-items:flex-end;animation:fadeIn .2s ease">
+          <div onClick="{{ stopProp }}" style="width:100%;background:#fff;border-radius:24px 24px 0 0;padding:12px 16px 30px;animation:sheetIn .3s cubic-bezier(.2,.8,.2,1)">
+            <div style="width:40px;height:5px;background:#E4E4E7;border-radius:999px;margin:2px auto 14px"></div>
+            <sc-for list="{{ masItems }}" as="m" hint-placeholder-count="5">
+              <button onClick="{{ m.go }}" style="display:flex;align-items:center;gap:14px;width:100%;padding:14px 8px;border:none;background:none;border-bottom:1px solid #F4F4F5;cursor:pointer;text-align:left">
+                <span style="flex:none;width:40px;height:40px;border-radius:12px;background:#F0FDFA;color:#0F766E;display:flex;align-items:center;justify-content:center">{{ m.iconEl }}</span>
+                <span style="flex:1;font-size:15px;font-weight:700;color:#18181B">{{ m.label }}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A1A1AA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:480,&quot;height&quot;:904},&quot;roleInicial&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Login&quot;,&quot;Trabajador&quot;,&quot;Supervisor&quot;,&quot;Dueño&quot;,&quot;Admin&quot;],&quot;default&quot;:&quot;Login&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;mostrarPistas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+const C = { primary:'#0F766E', dark:'#134E4A', tealBg:'#CCFBF1', ok:'#16A34A', okBg:'#E7F7ED', amber:'#D97706', amberBg:'#FEF3C7', red:'#DC2626', redBg:'#FEE2E2', purple:'#7C3AED', ink:'#18181B', ink2:'#52525B', ink3:'#A1A1AA', line:'#E4E4E7', bg:'#FAFAF9' };
+const NOW = 'jueves 16 jul, 9:41 a.m.';
+
+function icon(name, size, color) {
+  const P = {
+    home:'M3 11.5 12 4l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+    plus:'M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z',
+    list:'M4 5h16v2.4H4zM4 10.8h16v2.4H4zM4 16.6h16V19H4z',
+    calendar:'M7 2v2H5a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2V2h-2v2H9V2zM6 9h12v9H6z',
+    grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+    alert:'M12 3 1 21h22zM11 9h2v6h-2zM11 17h2v2h-2z',
+    box:'M3 7 12 3l9 4v10l-9 4-9-4zm9 0 9-4M12 21V11',
+    scale:'M4 10h2v5H4zM7 8h2v9H7zM15 8h2v9h-2zM18 10h2v5h-2zM9 11.5h6v2H9z',
+    users:'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0z',
+    gear:'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm7.4 5a7.5 7.5 0 0 0 0-2l2-1.5-2-3.5-2.4 1a7.5 7.5 0 0 0-1.7-1L15 3H9l-.3 2.5a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.5L2.6 11a7.5 7.5 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a7.5 7.5 0 0 0 1.7 1L9 21h6l.3-2.5a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.5z',
+    dots:'M6 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM12 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM18 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4z',
+    check:'M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z',
+    swap:'M7 6h10l-2.5-2.5L16 2l5 5-5 5-1.5-1.5L17 8H7zM17 18H7l2.5 2.5L8 22l-5-5 5-5 1.5 1.5L7 16h10z',
+    chart:'M4 20V10h4v10zM10 20V4h4v16zM16 20v-7h4v7z',
+    truck:'M3 5h11v9H3zM14 8h4l3 3v3h-7zM7 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm10 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z',
+    money:'M3 6h18v12H3zm9 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z',
+    doc:'M6 2h8l4 4v16H6zM13 3v4h4'
+  };
+  return React.createElement('svg', { width:size, height:size, viewBox:'0 0 24 24', fill:color },
+    React.createElement('path', { d: P[name] || P.grid }));
+}
+
+// ---- data ----
+const USERS = [
+  { id:'u1', nombre:'Wilmer Pineda', rol:'trabajador', galpones:['Galpón 1 (recepción)'], user:'wilmer' },
+  { id:'u2', nombre:'Javier Gonzales', rol:'trabajador', galpones:['Galpón 2'], user:'javier' },
+  { id:'u3', nombre:'Donaldo Hernández', rol:'trabajador', galpones:['Galpón 1 (recepción)','Galpón 3'], user:'donaldo' },
+  { id:'u4', nombre:'Marlon Domínguez', rol:'trabajador', galpones:['Galpón 2'], user:'marlon' },
+  { id:'u5', nombre:'Nelson Tabora', rol:'trabajador', galpones:['Galpón 2'], user:'nelson' },
+  { id:'u6', nombre:'Jose Quintanilla', rol:'supervisor', galpones:['Galpón 1 (recepción)','Galpón 2','Galpón 3'], user:'jose.q' },
+  { id:'u7', nombre:'Dueño Inmeca', rol:'dueno', galpones:[], user:'dueno@inmeca' },
+  { id:'u8', nombre:'Jose Mejía', rol:'admin', galpones:[], user:'admin@inmeca' }
+];
+const LOGIN_CARDS = [ USERS[2], USERS[5], USERS[6], USERS[7] ];
+const ROLE_LABEL = { trabajador:'Trabajador', supervisor:'Supervisor', dueno:'Dueño', admin:'Admin' };
+const HOME = { trabajador:'reg', supervisor:'sup_home', dueno:'due_home', admin:'adm_home' };
+
+// Cosecha activa: mayo 2026 (ingreso 30 may), en fase de entrega. Los 3 galpones activos.
+const GALPONES_DET = {
+  'Galpón 1 (recepción)': { worker:'Wilmer Pineda', iniciales:5281, vivos:4922, mortAcum:359, mortPct:6.8, consumoQQ:342.1, edad:'Semana 7 · en entrega', estado:'critica',
+    bars:[ {label:'Consumo', pct:70, real:'96 QQ', ideal:'137.8 QQ'}, {label:'Peso', pct:94, real:'4.51 lb', ideal:'4.80 lb'} ],
+    heat:[ {s:1, d:[36,17,17,44,49,11,15]}, {s:2, d:[11,24,5,16,10,15,11]}, {s:3, d:[2,3,4,3,5,2,9]}, {s:4, d:[0,2,4,1,4,1,2]}, {s:5, d:[2,3,6,2,20,0,3]} ] },
+  'Galpón 2': { worker:'Javier Gonzales', iniciales:10457, vivos:9552, mortAcum:905, mortPct:8.7, consumoQQ:683, edad:'Semana 7 · en entrega', estado:'critica',
+    bars:[ {label:'Consumo', pct:84, real:'225 QQ', ideal:'267.5 QQ'}, {label:'Peso', pct:100, real:'4.78 lb', ideal:'4.80 lb'} ],
+    heat:[ {s:1, d:[149,48,48,114,88,65,50]}, {s:2, d:[8,17,9,22,20,39,14]}, {s:3, d:[5,7,5,6,9,5,17]}, {s:4, d:[9,5,7,3,4,10,4]}, {s:5, d:[4,13,14,20,58,0,9]} ] },
+  'Galpón 3': { worker:'Donaldo Hernández', iniciales:8862, vivos:8240, mortAcum:622, mortPct:7.0, consumoQQ:621.9, edad:'Semana 7 · en entrega', estado:'atencion',
+    bars:[ {label:'Consumo', pct:93, real:'215 QQ', ideal:'230.7 QQ'}, {label:'Peso', pct:105, real:'5.03 lb', ideal:'4.80 lb'} ],
+    heat:[ {s:1, d:[38,28,26,72,94,7,19]}, {s:2, d:[27,55,7,34,17,25,22]}, {s:3, d:[10,7,5,2,2,22,24]}, {s:4, d:[3,0,4,3,1,5,3]}, {s:5, d:[7,3,4,2,36,4,4]} ] }
+};
+const GALPONES_ACTIVOS = ['Galpón 1 (recepción)','Galpón 2','Galpón 3'];
+
+const ALERTAS = [
+  { sev:'critica', galpon:'Galpón 2', titulo:'Mortalidad crítica', detalle:'8.7% acumulada (905 de 10,457). Pico en la semana 1 (562 aves).' },
+  { sev:'critica', galpon:'Galpón 1 (recepción)', titulo:'Mortalidad crítica', detalle:'6.8% acumulada (359 de 5,281).' },
+  { sev:'critica', galpon:'Galpón 1 (recepción)', titulo:'Consumo muy bajo', detalle:'70% del ideal en semana 5 (96 vs 137.8 QQ).' },
+  { sev:'atencion', galpon:'Galpón 3', titulo:'Consumo bajo', detalle:'93% del ideal en semana 5 (215 vs 230.7 QQ).' },
+  { sev:'atencion', galpon:'Bodega', titulo:'Saldo de Súper Final ajustado', detalle:'210 sacos: alcanza justo para cerrar la cosecha.' }
+];
+
+const TENDENCIA = [
+  { label:'Feb', peso:4.08, mort:7.74 }, { label:'Abr', peso:5.30, mort:4.10 }, { label:'Jul', peso:4.81, mort:7.67 }
+];
+const HISTORIAL = [
+  { nombre:'Cosecha marzo 2026', periodo:'18 mar → 23 abr', aves:'21,300', mort:'4.10%', peso:'5.30 lb', conv:'1.49', kg:'48,809', mortSev:'atencion' },
+  { nombre:'Cosecha enero 2026', periodo:'9 ene → 17 feb', aves:'22,600', mort:'7.74%', peso:'4.08 lb', conv:'1.39', kg:'53,975', mortSev:'critica' }
+];
+// Entregas de la cosecha activa (mayo) — en curso: 3 con peso, 2 pendientes, sin responsable en el Excel.
+const ENTREGAS_ACTIVAS = [
+  { galpon:'Galpón 2', resp:'Sin responsable registrado', peso:'Peso pendiente de registrar', prom:'—', dias:'6 jul · 37 días', pending:true },
+  { galpon:'Galpón 3', resp:'Sin responsable registrado', peso:'Peso pendiente de registrar', prom:'—', dias:'6 jul · 37 días', pending:true },
+  { galpon:'Galpón 1', resp:'Sin responsable registrado', peso:'13,724 lb', prom:'4.78 lb', dias:'4 jul · 35 días', pending:false },
+  { galpon:'Galpón 2', resp:'Sin responsable registrado', peso:'12,990 lb', prom:'4.51 lb', dias:'4 jul · 35 días', pending:false },
+  { galpon:'Galpón 3', resp:'Sin responsable registrado', peso:'14,496 lb', prom:'5.03 lb', dias:'4 jul · 35 días', pending:false }
+];
+// Entregas de la cosecha enero 2026 (cerrada) — con responsable real por entrega.
+const ENTREGAS_ENERO = [
+  { galpon:'Galpón 1', resp:'Wilmer Pineda', peso:'14,582 lb', prom:'5.83 lb', dias:'14 feb · 35 días', pending:false },
+  { galpon:'Galpón 2', resp:'Javier Gonzales', peso:'13,991 lb', prom:'5.60 lb', dias:'14 feb · 35 días', pending:false },
+  { galpon:'Galpón 1', resp:'Donaldo Hernández', peso:'5,408 lb', prom:'5.41 lb', dias:'15 feb · 36 días', pending:false },
+  { galpon:'Galpón 3', resp:'Wilmer Pineda', peso:'14,517 lb', prom:'5.81 lb', dias:'16 feb · 37 días', pending:false },
+  { galpon:'Galpón 2', resp:'Marlon Domínguez', peso:'15,079 lb', prom:'5.80 lb', dias:'16 feb · 37 días', pending:false },
+  { galpon:'Galpón 1', resp:'Donaldo Hernández', peso:'5,832 lb', prom:'5.83 lb', dias:'16 feb · 37 días', pending:false },
+  { galpon:'Galpón 2', resp:'Nelson Tabora', peso:'15,466 lb', prom:'5.95 lb', dias:'16 feb · 37 días', pending:false },
+  { galpon:'Galpón 2', resp:'Marlon Domínguez', peso:'15,840 lb', prom:'6.09 lb', dias:'17 feb · 38 días', pending:false },
+  { galpon:'Galpón 1', resp:'Donaldo Hernández', peso:'5,899 lb', prom:'5.90 lb', dias:'17 feb · 38 días', pending:false },
+  { galpon:'Galpón 1', resp:'Jose Quintanilla', peso:'7,343 lb', prom:'5.65 lb', dias:'17 feb · 38 días', pending:false },
+  { galpon:'Galpón 1', resp:'Donaldo Hernández', peso:'5,035 lb', prom:'5.59 lb', dias:'17 feb · 38 días', pending:false }
+];
+const COSTOS = [
+  { label:'Ene', monto:1380850 }, { label:'Mar', monto:1167330 }, { label:'May', monto:1316400 }
+];
+const SACOS_GALPON = [ {g:'Galpón 1 (recepción)', n:342}, {g:'Galpón 2', n:683}, {g:'Galpón 3', n:622} ];
+const BODEGA_SALDOS = [ { tipo:'Súper Inicio', sacos:130 }, { tipo:'Súper Final', sacos:210 } ];
+const MOVIMIENTOS = [
+  { fecha:'30 jun', tipo:'Súper Final', n:250, destino:'Bodega general', dir:'entrada' },
+  { fecha:'27 jun', tipo:'Súper Final', n:250, destino:'Galpón 2', dir:'salida' },
+  { fecha:'25 jun', tipo:'Súper Final', n:250, destino:'Galpón 3', dir:'salida' },
+  { fecha:'16 jun', tipo:'Súper Inicio', n:40, destino:'Bodega general', dir:'entrada' }
+];
+const fmtL = n => 'L ' + n.toLocaleString('es-HN');
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user:null, galpon:null, screen:null, toast:null, modal:null, masOpen:false,
+      fMuertas:0, fSacos:0, fTipo:'Súper Final', fTarget:null, fEditing:false,
+      pFecha:'2026-07-20', pMotivo:'Personal',
+      detGalpon:'Galpón 2',
+      mBloques:[ {aves:'', peso:''}, {aves:'', peso:''}, {aves:'', peso:''} ],
+      invTipo:'Súper Final', invGalpon:'Galpón 2', invSacos:0,
+      trasDestino:'Galpón 3', trasCantidad:0,
+      cosAves:0, cosGalpon:'Galpón 1 (recepción)',
+      entAves:0, entPeso:0,
+      showAddTask:false, tDesc:'', tGalpon:'Galpón 2', tWorker:'Donaldo Hernández', tFecha:'Hoy',
+      regDone:{ 'Galpón 1 (recepción)':true, 'Galpón 2':true, 'Galpón 3':false },
+      ultimo:{ 'Galpón 1 (recepción)':{ muertas:3, sacos:3, tipo:'Súper Final' }, 'Galpón 2':{ muertas:9, sacos:4, tipo:'Súper Final' } },
+      tareas:[
+        { id:1, desc:'Limpieza de comederos', galpon:'Galpón 2', worker:'Donaldo Hernández', fecha:'Hoy', done:false },
+        { id:2, desc:'Revisión de cortinas', galpon:'Galpón 3', worker:'Wilmer Pineda', fecha:'Hoy', done:true },
+        { id:3, desc:'Limpieza de bebederos', galpon:'Galpón 1 (recepción)', worker:'Jose Quintanilla', fecha:'Ayer', done:true },
+        { id:4, desc:'Revisión de tolva de alimento', galpon:'Galpón 2', worker:'Donaldo Hernández', fecha:'Mañana', done:false },
+        { id:5, desc:'Desinfección de accesos', galpon:'Galpón 3', worker:'Wilmer Pineda', fecha:'Sáb 18 jul', done:false }
+      ],
+      permisos:[
+        { id:1, worker:'Wilmer Pineda', fecha:'20 jul', motivo:'Personal', estado:'pendiente' },
+        { id:2, worker:'Donaldo Hernández', fecha:'30 jun', motivo:'Enfermedad', estado:'aprobado' },
+        { id:3, worker:'Jose Quintanilla', fecha:'15 jun', motivo:'Personal', estado:'rechazado' }
+      ]
+    };
+  }
+  componentDidMount() {
+    const r = this.props.roleInicial;
+    if (r && r !== 'Login') {
+      const map = { 'Trabajador':'u3', 'Supervisor':'u6', 'Dueño':'u7', 'Admin':'u8' };
+      const u = USERS.find(x => x.id === map[r]);
+      if (u) this.login(u, true);
+    }
+  }
+  showToast(t) { this.setState({ toast:t }); clearTimeout(this._tt); this._tt = setTimeout(() => this.setState({ toast:null }), 3400); }
+  login(u, skipSel) {
+    const needSel = !skipSel && (u.rol === 'trabajador' || u.rol === 'supervisor') && u.galpones.length > 1;
+    this.setState({ user:u, galpon:u.galpones[0] || null, fTarget:null, fEditing:false, masOpen:false, screen: needSel ? 'selector' : HOME[u.rol] });
+  }
+  pickGalpon(g) { this.setState({ galpon:g, screen: HOME[this.state.user.rol] }); }
+  go(s) { this.setState({ screen:s, masOpen:false, modal:null }); }
+  goReg(target) { this.setState({ screen:'reg', fTarget:target, fEditing:false, fMuertas:0, fSacos:0, fTipo:'Súper Final', masOpen:false }); }
+  logout() { this.setState({ user:null, screen:null, masOpen:false, toast:null, modal:null, fTarget:null }); }
+  closeModal() { this.setState({ modal:null }); }
+  closeMas() { this.setState({ masOpen:false }); }
+  openMas() { this.setState({ masOpen:true }); }
+  regTarget() { return this.state.fTarget || this.state.galpon || 'Galpón 3'; }
+  editRegistro() {
+    const g = this.regTarget(); const u = this.state.ultimo[g] || {};
+    this.setState({ fEditing:true, fMuertas:u.muertas || 0, fSacos:u.sacos || 0, fTipo:u.tipo || 'Súper Final' });
+  }
+  guardarRegistro() {
+    const g = this.regTarget();
+    if (this.state.regDone[g]) { this.setState({ modal:{ type:'overwrite', g } }); return; }
+    this.doSaveRegistro(g);
+  }
+  doSaveRegistro(g) {
+    const { fMuertas, fSacos, fTipo, user } = this.state;
+    const rd = { ...this.state.regDone, [g]:true };
+    const ult = { ...this.state.ultimo, [g]:{ muertas:fMuertas, sacos:fSacos, tipo:fTipo } };
+    const back = user.rol === 'trabajador' ? 'reg' : (user.rol === 'supervisor' ? 'sup_home' : 'due_home');
+    this.setState({ regDone:rd, ultimo:ult, modal:null, fEditing:false, fMuertas:0, fSacos:0, screen:back, fTarget:null });
+    this.showToast(`Guardado: ${fMuertas} aves muertas, ${fSacos} sacos de ${fTipo} — hoy 9:41 a.m.`);
+  }
+  toggleTarea(id) {
+    const tareas = this.state.tareas.map(t => t.id === id ? { ...t, done:!t.done } : t);
+    const t = tareas.find(x => x.id === id);
+    this.setState({ tareas });
+    if (t.done) this.showToast(`Marcada como hecha: ${t.desc} — hoy 9:41 a.m.`);
+  }
+  enviarPermiso() {
+    const { pFecha, pMotivo, user, permisos } = this.state;
+    const d = new Date(pFecha + 'T00:00'); const fmt = d.toLocaleDateString('es-HN', { day:'numeric', month:'short' });
+    this.setState({ permisos:[{ id:Date.now(), worker:user.nombre, fecha:fmt, motivo:pMotivo, estado:'pendiente' }, ...permisos] });
+    this.showToast('Solicitud enviada — el dueño la va a revisar.');
+  }
+  resolverPermiso(id, estado) {
+    this.setState({ permisos:this.state.permisos.map(p => p.id === id ? { ...p, estado } : p) });
+    this.showToast(estado === 'aprobado' ? 'Permiso aprobado.' : 'Permiso rechazado.');
+  }
+  simpleSave(msg) { this.showToast(msg); const r = this.state.user.rol; this.setState({ screen: r === 'supervisor' ? 'sup_home' : 'due_home', masOpen:false }); }
+  setVal(k, v) { this.setState({ [k]:v }); }
+  setBloque(i, field, v) { const mb = this.state.mBloques.map((b, j) => j === i ? { ...b, [field]:v } : b); this.setState({ mBloques:mb }); }
+  guardarMuestreo() {
+    const tot = this.state.mBloques.reduce((a, b) => ({ aves:a.aves + (+b.aves || 0), peso:a.peso + (+b.peso || 0) }), { aves:0, peso:0 });
+    const prom = tot.aves ? (tot.peso / tot.aves).toFixed(2) : '0';
+    this.setState({ mBloques:[{aves:'',peso:''},{aves:'',peso:''},{aves:'',peso:''}], screen:'sup_home' });
+    this.showToast(`Muestreo guardado — peso promedio ${prom} lb/ave (${tot.aves} aves).`);
+  }
+  guardarInventario() { const { invSacos, invTipo, invGalpon } = this.state; this.setState({ invSacos:0 }); this.showToast(`Transferido: ${invSacos} sacos de ${invTipo} a ${invGalpon} — hoy.`); }
+  guardarTraslado() { const { trasCantidad, trasDestino, galpon } = this.state; this.setState({ trasCantidad:0, screen:'sup_home' }); this.showToast(`Traslado registrado: ${trasCantidad} aves de ${galpon || 'Galpón 1'} a ${trasDestino} — hoy.`); }
+  abrirCosecha() { const { cosAves, cosGalpon } = this.state; this.setState({ cosAves:0, screen:'due_home' }); this.showToast(`Cosecha abierta: ${cosAves} aves recibidas en ${cosGalpon} — hoy.`); }
+  guardarEntrega() { const { entAves, entPeso } = this.state; this.setState({ entAves:0, entPeso:0, screen:'due_galpon' }); this.showToast(`Entrega guardada: ${entAves} aves, ${entPeso} lb entregados — hoy.`); }
+  nuevaTarea() {
+    const { tDesc, tGalpon, tWorker, tFecha, tareas } = this.state;
+    if (!tDesc.trim()) { this.showToast('Escribí una descripción para la tarea.'); return; }
+    this.setState({ tareas:[...tareas, { id:Date.now(), desc:tDesc, galpon:tGalpon, worker:tWorker, fecha:tFecha, done:false }], showAddTask:false, tDesc:'' });
+    this.showToast(`Tarea creada: ${tDesc} · ${tGalpon} — asignada a ${tWorker}.`);
+  }
+  trendChart() {
+    const W = 300, H = 150, pad = 26, n = TENDENCIA.length;
+    const x = i => pad + i * (W - pad * 2) / (n - 1);
+    const yP = v => H - 30 - (v - 3.5) / (5.5 - 3.5) * (H - 60);
+    const yM = v => H - 30 - (v - 3) / (8.5 - 3) * (H - 60);
+    const line = (fn, key) => TENDENCIA.map((d, i) => `${x(i).toFixed(1)},${fn(d[key]).toFixed(1)}`).join(' ');
+    const dots = (fn, key, col) => TENDENCIA.map((d, i) => React.createElement('circle', { key:key+i, cx:x(i), cy:fn(d[key]), r:3.5, fill:col }));
+    const labels = TENDENCIA.map((d, i) => React.createElement('text', { key:'l'+i, x:x(i), y:H - 8, 'text-anchor':'middle', 'font-size':11, 'font-weight':700, fill:'#A1A1AA' }, d.label + ' 26'));
+    return React.createElement('svg', { width:'100%', viewBox:`0 0 ${W} ${H}`, style:{ display:'block' } }, [
+      React.createElement('polyline', { key:'p', points:line(yP, 'peso'), fill:'none', stroke:C.primary, 'stroke-width':2.5, 'stroke-linecap':'round', 'stroke-linejoin':'round' }),
+      React.createElement('polyline', { key:'m', points:line(yM, 'mort'), fill:'none', stroke:C.red, 'stroke-width':2.5, 'stroke-dasharray':'5 4', 'stroke-linecap':'round' }),
+      ...dots(yP, 'p', C.primary), ...dots(yM, 'm', C.red), ...labels
+    ]);
+  }
+  donut() {
+    const s1 = BODEGA_SALDOS[0].sacos, s2 = BODEGA_SALDOS[1].sacos, total = s1 + s2, r = 52, cx = 65, cy = 65, circ = 2 * Math.PI * r;
+    const seg1 = s1 / total * circ, seg2 = s2 / total * circ;
+    return React.createElement('svg', { width:130, height:130, viewBox:'0 0 130 130' }, [
+      React.createElement('circle', { key:'bg', cx, cy, r, fill:'none', stroke:'#F4F4F5', 'stroke-width':20 }),
+      React.createElement('circle', { key:'s2', cx, cy, r, fill:'none', stroke:C.amber, 'stroke-width':20, 'stroke-dasharray':`${seg2} ${circ}`, transform:`rotate(${-90 + s1/total*360} ${cx} ${cy})` }),
+      React.createElement('circle', { key:'s1', cx, cy, r, fill:'none', stroke:C.primary, 'stroke-width':20, 'stroke-dasharray':`${seg1} ${circ}`, transform:`rotate(-90 ${cx} ${cy})` }),
+      React.createElement('text', { key:'t', x:cx, y:cy - 2, 'text-anchor':'middle', 'font-size':26, 'font-weight':800, fill:C.dark }, String(total)),
+      React.createElement('text', { key:'l', x:cx, y:cy + 15, 'text-anchor':'middle', 'font-size':10, 'font-weight':700, fill:'#A1A1AA' }, 'SACOS')
+    ]);
+  }
+
+  sev(k) { return k === 'critica' ? { c:C.red, bg:C.redBg, t:'Crítico', border:'#FCA5A5' } : k === 'atencion' ? { c:C.amber, bg:C.amberBg, t:'Atención', border:'#FCD34D' } : { c:C.ok, bg:C.okBg, t:'En rango', border:'#A7E3BE' }; }
+  barColor(pct) { return pct >= 95 ? C.ok : pct >= 88 ? C.amber : C.red; }
+  heatCell(n) {
+    if (n === 0 || n == null) return { bg:'#F4F4F5', fg:'#A1A1AA' };
+    if (n <= 12) return { bg:'#FEF3C7', fg:'#92400E' };
+    if (n <= 24) return { bg:'#FED7AA', fg:'#9A3412' };
+    if (n <= 40) return { bg:'#FCA5A5', fg:'#7F1D1D' };
+    return { bg:'#EF4444', fg:'#fff' };
+  }
+
+  navFor(rol) {
+    const s = this.state.screen; const mk = (key, label, ic, active, act) => ({ key, label, icon:ic, iconEl:icon(ic, 23, active ? C.primary : '#A1A1AA'), color: active ? C.primary : '#A1A1AA', go: act || (() => this.go(key)) });
+    if (rol === 'trabajador') return [ mk('reg','Registrar','plus', s==='reg'), mk('tareas_t','Tareas','check', s==='tareas_t'), mk('misreg','Mis registros','list', s==='misreg'), mk('permiso_t','Permiso','calendar', s==='permiso_t') ];
+    if (rol === 'supervisor') return [ mk('sup_home','Galpones','grid', s==='sup_home'||s==='sup_detalle'), mk('muestreo','Muestreo','scale', s==='muestreo'), mk('inventario','Inventario','box', s==='inventario'||s==='traslado'), mk('tareas_s','Tareas','calendar', s==='tareas_s'), mk('permisos_s','Permisos','list', s==='permisos_s') ];
+    if (rol === 'dueno') return [ mk('due_home','Resumen','home', s==='due_home'), mk('due_galpon','Galpones','grid', s==='due_galpon'), mk('historial','Historial','chart', s==='historial'), mk('alertas','Alertas','alert', s==='alertas'), mk('mas','Más','dots', this.state.masOpen, () => this.openMas()) ];
+    return [ mk('adm_home','Sistema','gear', s==='adm_home'), mk('adm_users','Usuarios','users', s==='adm_users') ];
+  }
+
+  renderVals() {
+    const st = this.state; const u = st.user;
+    const isLogin = !u; const isSelector = st.screen === 'selector';
+    const S = {}; ['reg','tareas_t','misreg','permiso_t','sup_home','sup_detalle','muestreo','inventario','traslado','tareas_s','permisos_s','due_home','due_galpon','historial','bodega','alertas','calendario','permisos_d','usuarios_d','nueva_cosecha','entrega','adm_home','adm_users'].forEach(k => S[k] = false);
+    if (st.screen) S[st.screen] = true;
+    const detailScreen = S.sup_detalle || S.due_galpon;
+    const tasksScreen = S.tareas_s || S.calendario;
+    const isDueno = !!u && u.rol === 'dueno';
+
+    const titles = { reg:'Registrar producción', tareas_t:'Tareas asignadas', misreg:'Mis registros', permiso_t:'Solicitar permiso', selector:'Elegí tu galpón',
+      sup_home:'Galpones y registros', sup_detalle:'Detalle de galpón', muestreo:'Muestreo de peso', inventario:'Inventario y bodega', traslado:'Trasladar aves', tareas_s:'Tareas del equipo', permisos_s:'Permisos del equipo',
+      due_home:'Resumen de la granja', due_galpon:'Detalle de galpón', historial:'Historial de cosechas', bodega:'Bodega y costos', alertas:'Alertas', calendario:'Calendario y tareas', permisos_d:'Permisos', usuarios_d:'Usuarios', nueva_cosecha:'Abrir cosecha nueva', entrega:'Registrar entrega',
+      adm_home:'Sistema', adm_users:'Usuarios de plataforma' };
+    let subtitle = '';
+    if (u) {
+      if (u.rol === 'trabajador') subtitle = `${u.nombre} · ${st.galpon}`;
+      else if (u.rol === 'supervisor') subtitle = `${u.nombre} · Granja Inmeca`;
+      else if (u.rol === 'dueno') subtitle = `Granja Inmeca · ${NOW}`;
+      else subtitle = 'Granja Inmeca · plataforma';
+    }
+
+    const vals = {
+      isLogin, isSelector,
+      showHeader: !!u && !isSelector, showNav: !!u && !isSelector,
+      title: isSelector ? titles.selector : (titles[st.screen] || ''),
+      subtitle, roleLabel: u ? ROLE_LABEL[u.rol] : '',
+      nowStr: NOW, toast: st.toast, masOpen: st.masOpen,
+      detailScreen, tasksScreen, isDueno,
+      logout: () => this.logout(), closeModal: () => this.closeModal(), closeMas: () => this.closeMas(), stopProp: (e) => e.stopPropagation(),
+      loginCards: LOGIN_CARDS.map(x => ({ nombre:x.nombre, sub:`${ROLE_LABEL[x.rol]}${x.galpones.length ? ' · ' + x.galpones.join(', ') : ''}`, initials:x.nombre.split(' ').map(w=>w[0]).slice(0,2).join(''), badgeBg:'#CCFBF1', badgeColor:C.primary, enter: () => this.login(x) })),
+      selectorGalpones: (u ? u.galpones : []).map(g => { const d = GALPONES_DET[g]; return { name:g, sub: `${d ? d.vivos.toLocaleString('es-HN') : 0} aves vivas`, subColor: C.primary, pick: () => this.pickGalpon(g) }; }),
+      navItems: u ? this.navFor(u.rol) : [],
+      // modal
+      modal: st.modal,
+      modalTitle: st.modal ? 'Ya registraste hoy' : '',
+      modalBody: st.modal ? '¿Querés actualizar el registro de hoy? El anterior se reemplaza.' : '',
+      modalConfirmText: 'Sí, actualizar', modalConfirmBg: C.primary,
+      modalConfirm: () => { if (st.modal) this.doSaveRegistro(st.modal.g); },
+      masItems: [
+        { label:'Bodega y costos', iconEl:icon('money',20,C.primary), go:()=>this.go('bodega') },
+        { label:'Calendario y tareas', iconEl:icon('calendar',20,C.primary), go:()=>this.go('calendario') },
+        { label:'Permisos (aprobación)', iconEl:icon('check',20,C.primary), go:()=>this.go('permisos_d') },
+        { label:'Usuarios', iconEl:icon('users',20,C.primary), go:()=>this.go('usuarios_d') },
+        { label:'Abrir cosecha nueva', iconEl:icon('plus',20,C.primary), go:()=>this.go('nueva_cosecha') }
+      ],
+      S
+    };
+
+    // --- Trabajador: registrar ---
+    const tgt = this.regTarget(); const done = st.regDone[tgt]; const det = GALPONES_DET[tgt];
+    const proxy = u && u.rol !== 'trabajador';
+    Object.assign(vals, {
+      regTargetName: tgt, regEdad: det ? det.edad : 'Semana 3',
+      regProxyBanner: proxy, regProxyText: det ? `Registrando por ${det.worker} · ${tgt}` : `Registrando · ${tgt}`,
+      regShowSummary: done && !st.fEditing,
+      regShowForm: !done || st.fEditing,
+      regSummaryText: (() => { const l = st.ultimo[tgt]; return l ? `${l.muertas} aves muertas · ${l.sacos} sacos de ${l.tipo}` : ''; })(),
+      editRegistro: () => this.editRegistro(),
+      fMuertas: st.fMuertas, fSacos: st.fSacos,
+      incMuertas: () => this.setState(s => ({ fMuertas:s.fMuertas + 1 })), decMuertas: () => this.setState(s => ({ fMuertas:Math.max(0, s.fMuertas - 1) })),
+      incSacos: () => this.setState(s => ({ fSacos:s.fSacos + 1 })), decSacos: () => this.setState(s => ({ fSacos:Math.max(0, s.fSacos - 1) })),
+      setTipoInicio: () => this.setState({ fTipo:'Súper Inicio' }), setTipoFinal: () => this.setState({ fTipo:'Súper Final' }),
+      tipoInicioBg: st.fTipo === 'Súper Inicio' ? C.primary : '#fff', tipoInicioColor: st.fTipo === 'Súper Inicio' ? '#fff' : C.ink2, tipoInicioBorder: st.fTipo === 'Súper Inicio' ? C.primary : C.line,
+      tipoFinalBg: st.fTipo === 'Súper Final' ? C.primary : '#fff', tipoFinalColor: st.fTipo === 'Súper Final' ? '#fff' : C.ink2, tipoFinalBorder: st.fTipo === 'Súper Final' ? C.primary : C.line,
+      guardarRegistro: () => this.guardarRegistro()
+    });
+
+    // --- Trabajador: tareas ---
+    const misTareas = u && u.rol === 'trabajador' ? st.tareas.filter(t => t.worker === u.nombre) : st.tareas;
+    vals.tareasTrabajadorVacio = misTareas.length === 0;
+    vals.tareasTrabajador = misTareas.map(t => ({
+      desc:t.desc, meta:`${t.galpon} · ${t.fecha}`, toggle:() => this.toggleTarea(t.id),
+      border: t.done ? '#A7E3BE' : C.line, bg: t.done ? C.okBg : '#fff',
+      checkBorder: t.done ? C.ok : '#D4D4D8', checkBg: t.done ? C.ok : '#fff', checkOpacity: t.done ? 1 : 0,
+      strike: t.done ? 'line-through' : 'none',
+      chip: t.done ? 'Hecha' : 'Pendiente', chipColor: t.done ? C.ok : C.amber, chipBg: t.done ? C.okBg : C.amberBg
+    }));
+
+    // --- Trabajador: mis registros ---
+    vals.misRegistros = [
+      { fecha:'Jueves 16 jul', hora:'9:41 a.m.', muertas:4, sacos:3, tipo:'Súper Final', dot:C.primary },
+      { fecha:'Miércoles 15 jul', hora:'8:50 a.m.', muertas:6, sacos:3, tipo:'Súper Final', dot:C.ink3 },
+      { fecha:'Martes 14 jul', hora:'9:05 a.m.', muertas:2, sacos:3, tipo:'Súper Final', dot:C.ink3 },
+      { fecha:'Lunes 13 jul', hora:'8:35 a.m.', muertas:9, sacos:4, tipo:'Súper Final', dot:C.ink3 }
+    ];
+
+    // --- Trabajador: permiso ---
+    const badgeP = e => e === 'aprobado' ? { color:C.ok, bg:C.okBg, estado:'Aprobado' } : e === 'rechazado' ? { color:C.red, bg:C.redBg, estado:'Rechazado' } : { color:C.amber, bg:C.amberBg, estado:'Pendiente' };
+    vals.pFecha = st.pFecha; vals.setPFecha = e => this.setState({ pFecha:e.target.value });
+    vals.setMotivoEnf = () => this.setState({ pMotivo:'Enfermedad' }); vals.setMotivoPer = () => this.setState({ pMotivo:'Personal' }); vals.setMotivoOtro = () => this.setState({ pMotivo:'Otro' });
+    const mm = (v) => ({ B: st.pMotivo === v ? C.primary : C.line, Bg: st.pMotivo === v ? C.primary : '#fff', Cc: st.pMotivo === v ? '#fff' : C.ink2 });
+    const e1 = mm('Enfermedad'), p1 = mm('Personal'), o1 = mm('Otro');
+    Object.assign(vals, { mEnfB:e1.B, mEnfBg:e1.Bg, mEnfC:e1.Cc, mPerB:p1.B, mPerBg:p1.Bg, mPerC:p1.Cc, mOtroB:o1.B, mOtroBg:o1.Bg, mOtroC:o1.Cc, enviarPermiso:() => this.enviarPermiso() });
+    vals.misPermisos = (u ? st.permisos.filter(p => p.worker === u.nombre) : []).map(p => ({ fecha:p.fecha, motivo:p.motivo, ...badgeP(p.estado) }));
+
+    // ===== SHARED: detalle de galpón (Supervisor + Dueño) =====
+    const dg = st.detGalpon; const dd = GALPONES_DET[dg]; const dsev = this.sev(dd.estado);
+    vals.detChips = GALPONES_ACTIVOS.map(g => ({ name:g, bg: g === dg ? C.primary : '#fff', color: g === dg ? '#fff' : C.ink2, border: g === dg ? C.primary : C.line, pick: () => this.setVal('detGalpon', g) }));
+    Object.assign(vals, {
+      detName:dg, detWorker:dd.worker, detVivos:dd.vivos.toLocaleString('es-HN'), detIniciales:dd.iniciales.toLocaleString('es-HN'),
+      detMortAcum:dd.mortAcum.toLocaleString('es-HN'), detMortPct:dd.mortPct + '%', detConsumo:dd.consumoQQ + ' QQ', detEdad:dd.edad,
+      detSevColor:dsev.c, detSevBg:dsev.bg, detSevText:dsev.t, detSevBorder:dsev.border,
+      detMortColor: dd.mortPct > 4 ? C.red : dd.mortPct > 2.2 ? C.amber : C.ok,
+      detMuestra: Math.round(dd.vivos * 0.1).toLocaleString('es-HN'),
+      detBars: dd.bars.map(b => ({ label:b.label, pctText:b.pct + '%', color:this.barColor(b.pct), real:b.real, ideal:b.ideal, width:Math.min(100, b.pct) + '%', pctColor:this.barColor(b.pct) })),
+      detHeat: dd.heat.map(r => ({ s:'S' + r.s, dias:r.d.map(n => ({ n:(n == null ? 0 : n), bg:this.heatCell(n).bg, fg:this.heatCell(n).fg })) })),
+      goEntrega: () => this.go('entrega'), goMuestreoFromDet: () => this.go('muestreo')
+    });
+
+    // galpón cards (semáforo) for Supervisor home + Dueño home
+    const semCard = (g, tap) => { const d = GALPONES_DET[g]; const s = this.sev(d.estado); const rdone = st.regDone[g]; return {
+      name:g, worker:d.worker, vivos:d.vivos.toLocaleString('es-HN'), edad:d.edad, mortPct:d.mortPct + '%',
+      sevColor:s.c, sevBg:s.bg, sevText:s.t, sevBorder:s.border,
+      regDot: rdone ? C.ok : C.amber, regBg: rdone ? C.okBg : C.amberBg, regColor: rdone ? C.ok : C.amber,
+      regText: rdone ? 'Registró hoy' : 'Falta registro de hoy', regIcon: rdone ? 'check' : 'alert',
+      regIconEl: icon(rdone ? 'check' : 'alert', 14, rdone ? C.ok : C.amber),
+      bars: d.bars.map(b => ({ label:b.label, width:Math.min(100, b.pct) + '%', color:this.barColor(b.pct), pctText:b.pct + '%' })),
+      open: () => this.setState({ detGalpon:g, screen: tap }), registrarPor: () => this.goReg(g)
+    }; };
+
+    // ===== SUPERVISOR =====
+    vals.supGalpones = GALPONES_ACTIVOS.map(g => semCard(g, 'sup_detalle'));
+    vals.supRecepcion = { name:'Galpón 1 (recepción)', worker:'Wilmer Pineda' };
+    vals.supTransfer = 'Traslado registrado · 6 jun: Galpón 1 (recepción) → Galpón 2 (10,457 aves) y Galpón 3 (8,862 aves).';
+    vals.muestreoBloques = st.mBloques.map((b, i) => ({ idx:'Bloque ' + (i + 1), aves:b.aves, peso:b.peso, setAves:(e) => this.setBloque(i, 'aves', e.target.value), setPeso:(e) => this.setBloque(i, 'peso', e.target.value), prom: (b.aves && b.peso) ? (b.peso / b.aves).toFixed(2) + ' lb/ave' : '—' }));
+    const mtot = st.mBloques.reduce((a, b) => ({ aves:a.aves + (+b.aves || 0), peso:a.peso + (+b.peso || 0) }), { aves:0, peso:0 });
+    vals.muestreoPromGeneral = mtot.aves ? (mtot.peso / mtot.aves).toFixed(2) + ' lb/ave' : '—';
+    vals.guardarMuestreo = () => this.guardarMuestreo();
+    // inventario
+    vals.bodegaSaldos = [ { tipo:'Súper Inicio', sacos:130, pct:'100%', color:C.primary }, { tipo:'Súper Final', sacos:210, pct:'62%', color:C.amber } ];
+    vals.movimientos = MOVIMIENTOS.map(m => ({ fecha:m.fecha, tipo:m.tipo, n:m.n + ' sacos', destino:m.destino, dot: m.dir === 'entrada' ? C.ok : C.primary, dirText: m.dir === 'entrada' ? 'Entrada a bodega' : 'Salida a galpón', dirColor: m.dir === 'entrada' ? C.ok : C.primary, sign: m.dir === 'entrada' ? '+' : '−' }));
+    vals.invTipo = st.invTipo; vals.invGalpon = st.invGalpon; vals.invSacos = st.invSacos;
+    vals.invTipoInicioSel = st.invTipo === 'Súper Inicio'; 
+    vals.setInvInicio = () => this.setVal('invTipo','Súper Inicio'); vals.setInvFinal = () => this.setVal('invTipo','Súper Final');
+    vals.invInicioBg = st.invTipo==='Súper Inicio'?C.primary:'#fff'; vals.invInicioColor = st.invTipo==='Súper Inicio'?'#fff':C.ink2; vals.invInicioBorder = st.invTipo==='Súper Inicio'?C.primary:C.line;
+    vals.invFinalBg = st.invTipo==='Súper Final'?C.primary:'#fff'; vals.invFinalColor = st.invTipo==='Súper Final'?'#fff':C.ink2; vals.invFinalBorder = st.invTipo==='Súper Final'?C.primary:C.line;
+    vals.invGalponChips = ['Galpón 1 (recepción)','Galpón 2','Galpón 3'].map(g => ({ name:g, bg: g===st.invGalpon?C.primary:'#fff', color: g===st.invGalpon?'#fff':C.ink2, border: g===st.invGalpon?C.primary:C.line, pick:()=>this.setVal('invGalpon',g) }));
+    vals.setInvSacos = (e) => this.setVal('invSacos', +e.target.value || 0);
+    vals.incInvSacos = () => this.setState(s=>({invSacos:s.invSacos+1})); vals.decInvSacos = () => this.setState(s=>({invSacos:Math.max(0,s.invSacos-1)}));
+    vals.guardarInventario = () => this.guardarInventario(); vals.goTraslado = () => this.go('traslado');
+    // traslado
+    vals.trasOrigen = st.galpon || 'Galpón 1 (recepción)';
+    vals.trasChips = ['Galpón 2','Galpón 3'].map(g => ({ name:g, bg: g===st.trasDestino?C.purple:'#fff', color: g===st.trasDestino?'#fff':C.ink2, border: g===st.trasDestino?C.purple:C.line, pick:()=>this.setVal('trasDestino',g) }));
+    vals.trasCantidad = st.trasCantidad; vals.incTras = () => this.setState(s=>({trasCantidad:s.trasCantidad+100})); vals.decTras = () => this.setState(s=>({trasCantidad:Math.max(0,s.trasCantidad-100)}));
+    vals.trasHistorial = [ { fecha:'6 jun 2026', texto:'Galpón 1 (recepción) → Galpón 2 · 10,457 aves' }, { fecha:'6 jun 2026', texto:'Galpón 1 (recepción) → Galpón 3 · 8,862 aves' } ];
+    vals.guardarTraslado = () => this.guardarTraslado();
+    // tareas equipo (supervisor + dueño calendario)
+    const teamTasks = st.tareas.map(t => ({ desc:t.desc, meta:`${t.galpon} · ${t.worker} · ${t.fecha}`, chip: t.done ? 'Hecha' : 'Pendiente', chipColor: t.done ? C.ok : C.amber, chipBg: t.done ? C.okBg : C.amberBg, dot: t.done ? C.ok : C.amber }));
+    vals.tareasEquipo = teamTasks;
+    vals.showAddTask = st.showAddTask; vals.toggleAddTask = () => this.setVal('showAddTask', !st.showAddTask);
+    vals.tDesc = st.tDesc; vals.setTDesc = (e) => this.setVal('tDesc', e.target.value);
+    vals.tGalponChips = ['Galpón 1 (recepción)','Galpón 2','Galpón 3'].map(g => ({ name:g, bg: g===st.tGalpon?C.primary:'#fff', color: g===st.tGalpon?'#fff':C.ink2, border: g===st.tGalpon?C.primary:C.line, pick:()=>this.setVal('tGalpon',g) }));
+    vals.tWorkerChips = ['Donaldo Hernández','Wilmer Pineda','Jose Quintanilla'].map(w => ({ name:w.split(' ')[0], bg: w===st.tWorker?C.primary:'#fff', color: w===st.tWorker?'#fff':C.ink2, border: w===st.tWorker?C.primary:C.line, pick:()=>this.setVal('tWorker',w) }));
+    vals.nuevaTarea = () => this.nuevaTarea();
+    // permisos equipo (solo lectura)
+    const teamP = st.permisos;
+    vals.permisosEquipo = teamP.map(p => ({ worker:p.worker, fecha:p.fecha, motivo:p.motivo, ...badgeP(p.estado) }));
+    vals.permisosEquipoVacio = teamP.filter(p => p.estado === 'pendiente').length === 0;
+
+    // ===== DUEÑO =====
+    vals.kpis = [ { n:'9,084', l:'Aves en granja · en entrega', c:C.dark }, { n:'7.67%', l:'Mortalidad · cosecha activa', c:C.red }, { n:'2', l:'Cosechas cerradas · 2026', c:C.dark }, { n:'5', l:'Alertas activas', c:C.red } ];
+    vals.dueGalpones = GALPONES_ACTIVOS.map(g => semCard(g, 'due_galpon'));
+    vals.trendChartEl = this.trendChart();
+    vals.donutEl = this.donut();
+    const alertStyle = a => { const s = this.sev(a.sev); return { titulo:a.titulo, detalle:a.detalle, galpon:a.galpon, color:s.c, bg:s.bg, border:s.border, sevText: a.sev === 'critica' ? 'Crítico' : 'Atención', iconEl:icon('alert', 18, s.c) }; };
+    vals.topAlertas = ALERTAS.slice(0, 2).map(alertStyle);
+    vals.alertCards = ALERTAS.map(alertStyle);
+    vals.goRegDueno = () => this.goReg('Galpón 2'); vals.goCalendario = () => this.go('calendario'); vals.goBodega = () => this.go('bodega'); vals.goAlertas = () => this.go('alertas');
+    // historial
+    vals.historialCards = HISTORIAL.map(h => { const s = this.sev(h.mortSev); return { ...h, mortColor:s.c, mortBg:s.bg }; });
+    vals.entregasActivas = ENTREGAS_ACTIVAS.map(e => ({ ...e, dot: e.pending ? C.amber : C.primary }));
+    vals.entregasEnero = ENTREGAS_ENERO.map(e => ({ ...e, dot: C.primary }));
+    // bodega/costos
+    const maxSaco = Math.max(...SACOS_GALPON.map(x => x.n));
+    vals.sacosGalpon = SACOS_GALPON.map(x => ({ g:x.g, n:x.n + ' sacos', width:(x.n / maxSaco * 100).toFixed(0) + '%' }));
+    const maxCosto = Math.max(...COSTOS.map(x => x.monto));
+    vals.costos = COSTOS.map(x => ({ label:x.label + ' 26', monto:fmtL(x.monto), width:(x.monto / maxCosto * 100).toFixed(0) + '%' }));
+    vals.bodegaTotalCompra = fmtL(COSTOS.reduce((a, b) => a + b.monto, 0));
+    // permisos aprobación
+    const pend = st.permisos.filter(p => p.estado === 'pendiente');
+    vals.permisosPendientes = pend.map(p => ({ worker:p.worker, fecha:p.fecha, motivo:p.motivo, aprobar:() => this.resolverPermiso(p.id, 'aprobado'), rechazar:() => this.resolverPermiso(p.id, 'rechazado') }));
+    vals.permisosPendientesVacio = pend.length === 0;
+    vals.permisosResueltos = st.permisos.filter(p => p.estado !== 'pendiente').map(p => ({ worker:p.worker, fecha:p.fecha, motivo:p.motivo, ...badgeP(p.estado) }));
+    // usuarios (dueño)
+    vals.usuariosOperativos = USERS.filter(x => x.rol !== 'admin').map(x => ({ nombre:x.nombre, initials:x.nombre.split(' ').map(w=>w[0]).slice(0,2).join(''), rol:ROLE_LABEL[x.rol], galpones: x.galpones.length ? x.galpones.join(', ') : 'Todos los galpones', rolColor: x.rol==='dueno'?C.dark:x.rol==='supervisor'?C.purple:C.primary, rolBg: x.rol==='dueno'?'#E7E5E4':x.rol==='supervisor'?'#F5F3FF':C.tealBg }));
+    vals.addUsuario = () => this.showToast('Formulario de alta de usuario (demo).');
+    // nueva cosecha
+    vals.cosAves = st.cosAves; vals.setCosAves = (e) => this.setVal('cosAves', +e.target.value || 0);
+    vals.cosGalponChips = ['Galpón 1 (recepción)'].map(g => ({ name:g, bg:C.primary, color:'#fff', border:C.primary, pick:()=>{} }));
+    vals.abrirCosecha = () => this.abrirCosecha();
+    // entrega
+    vals.entAves = st.entAves; vals.setEntAves = (e) => this.setVal('entAves', +e.target.value || 0);
+    vals.entPeso = st.entPeso; vals.setEntPeso = (e) => this.setVal('entPeso', +e.target.value || 0);
+    vals.entPromedio = (st.entAves && st.entPeso) ? (st.entPeso / st.entAves).toFixed(2) + ' lb/ave' : '—';
+    vals.guardarEntrega = () => this.guardarEntrega();
+
+    // ===== ADMIN =====
+    vals.admGranjas = [ { nombre:'Granja Inmeca', galpones:'3 galpones', estado:'Activa' } ];
+    vals.admGalpones = [ { nombre:'Galpón 1 (recepción)', estado:'Ocupado · Cosecha mayo 2026' }, { nombre:'Galpón 2', estado:'Ocupado · Cosecha mayo 2026' }, { nombre:'Galpón 3', estado:'Ocupado · Cosecha mayo 2026' } ];
+    vals.admUsuarios = USERS.map(x => ({ nombre:x.nombre, user:x.user, rol:ROLE_LABEL[x.rol], rolColor: x.rol==='dueno'?C.dark:x.rol==='supervisor'?C.purple:x.rol==='admin'?C.ink2:C.primary, rolBg: x.rol==='dueno'?'#E7E5E4':x.rol==='supervisor'?'#F5F3FF':x.rol==='admin'?'#F4F4F5':C.tealBg }));
+    vals.admAddGranja = () => this.showToast('Alta de granja (demo).'); vals.admAddGalpon = () => this.showToast('Alta de galpón (demo).'); vals.admAddUser = () => this.showToast('Alta de usuario de plataforma (demo).');
+
+    return vals;
+  }
+}
+</script>
+</body>
+</html>
